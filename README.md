@@ -41,7 +41,7 @@ HTML for Displaying Content:
 
 The primary technical challenges will be:
 - learning Go language in a brief period of time
-- finding and connecting appropriate web servers for the user interface
+- connecting application to equally fast, cloud-based web server (noticed that doesn't really exist right now so perceiving challenges in this realm)
 
 ##Group Members and Work Breakdown
 Our group consists of two members, Soo-Rae Hong and Boris Grogg.
@@ -66,12 +66,14 @@ Boris' primary responsibilities will be
 **Day 1 & 2:** Install, set up Go, basic concurrent reading and writing functions implemented (with TCP connection?) Gorilla WebSockets, connection between goroutines
 - Two goroutines can be connected on one channel
 - Chat function sends a greeting to each connection
+- Fully understand basic Go and Websockets functionality
 
 **Day 3:** Concurrent reading and writing functions implemented
 - Chat function copies data from one connection to the other through creation of another goroutine
 - Error logging
 - Closing connection and cleanup
 - JSON files for data rendering
+- Fully understand goroutines and concurrency as executed by Go 
 
 **Day 4:** Front end rendering with HTML and JavaScript  
 - Completion of JS/React files to handle input and output
