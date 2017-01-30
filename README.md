@@ -18,6 +18,7 @@ In the ever-changing, high-speed world of tech, clients are constantly demanding
 - [ ] AI Chatbot for responding to client input
 - [ ] Can support multiple users in one chat
 - [ ] Save chat logs to PostgreSQL or other DB
+- [ ] Emojis and images 
 - [ ] Scroll through chat logs without interruption
 
 ##Wireframe
@@ -59,7 +60,7 @@ Boris' primary responsibilities will be
 - Research and implementation of Gorilla WebSockets
 - Styling of input and output components on front-end
 - Different groups and threads (bonus)
-- Calling persistent data (bonus)
+- Emojis and other Materialize features (bonus)
 
 ##Implementation Timeline
 
@@ -73,7 +74,7 @@ Boris' primary responsibilities will be
 - Error logging
 - Closing connection and cleanup
 - JSON files for data rendering
-- Fully understand goroutines and concurrency as executed by Go 
+- Fully understand goroutines and concurrency as executed by Go
 
 **Day 4:** Front end rendering with HTML and JavaScript  
 - Completion of JS/React files to handle input and output
