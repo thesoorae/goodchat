@@ -18,7 +18,7 @@ In the ever-changing, high-speed world of tech, clients are constantly demanding
 - [ ] AI Chatbot for responding to client input
 - [ ] Can support multiple users in one chat
 - [ ] Save chat logs to PostgreSQL or other DB
-- [ ] Emojis and images 
+- [ ] Emojis and images
 - [ ] Scroll through chat logs without interruption
 
 ##Wireframe
@@ -64,12 +64,12 @@ Boris' primary responsibilities will be
 
 ##Implementation Timeline
 
-**Day 1 & 2:** Install, set up Go, basic concurrent reading and writing functions implemented (with TCP connection?) Gorilla WebSockets, connection between goroutines
+**Day 1 & 2:** Install, set up Go, basic concurrent reading and writing functions implemented (with TCP connection?) Gorilla WebSockets, connection between goroutines (Pair Programming)
 - Two goroutines can be connected on one channel
 - Chat function sends a greeting to each connection
 - Fully understand basic Go and Websockets functionality
 
-**Day 3:** Concurrent reading and writing functions implemented
+**Day 3:** Concurrent reading and writing functions implemented (Pair Programming)
 - Chat function copies data from one connection to the other through creation of another goroutine
 - Error logging
 - Closing connection and cleanup
