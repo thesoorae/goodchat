@@ -21,4 +21,4 @@ In the ever-changing, high-speed world of tech, clients are constantly demanding
 -[] Scroll through chat logs without interuption
 
 ##Wireframe
-[Wireframe]: ./goodchat.png
+[Wireframe](./goodchat.png) 
