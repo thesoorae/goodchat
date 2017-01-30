@@ -6,19 +6,19 @@ In the ever-changing, high-speed world of tech, clients are constantly demanding
 
 ##Functionality & MVP
 
--[] Go Server Application that transfers data through WebSocket from Client to Hub
--[] Each client can send and receive messages in real-time
--[] Rendering of chat logs (persistence of information for each session)
--[] Deployed on publicly available web server (Heroku ?)
--[] Front-end rendering
--[] Attractive UI
--[] Production ReadMe
+-[ ] Go Server Application that transfers data through WebSocket from Client to Hub
+-[ ] Each client can send and receive messages in real-time
+-[ ] Rendering of chat logs (persistence of information for each session)
+-[ ] Deployed on publicly available web server (Heroku ?)
+-[ ] Front-end rendering
+-[ ] Attractive UI
+-[ ] Production ReadMe
 
 ##Bonus
--[] AI Chatbot for responding to client input
--[] Can support multiple users in one chat
--[] Save chat logs to PostgreSQL or other DB
--[] Scroll through chat logs without interuption
+-[ ] AI Chatbot for responding to client input
+-[ ] Can support multiple users in one chat
+-[ ] Save chat logs to PostgreSQL or other DB
+-[ ] Scroll through chat logs without interuption
 
 ##Wireframe
-[Wireframe](./goodchat.png) 
+![Wireframe](/goodchat.png)
