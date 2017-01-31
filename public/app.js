@@ -6,7 +6,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const msg = document.getElementById('input');
   const log = document.getElementById('messages');
   const form = document.getElementById('form');
-  var ws;
   var conn;
 
 
