@@ -1,49 +1,108 @@
 
 
 document.addEventListener("DOMContentLoaded", () => {
+
+
   const msg = document.getElementById('input');
   const log = document.getElementById('messages');
-  const button = document.getElementById('chat-button');
-  let conn = null;
+  const form = document.getElementById('form');
+  var ws;
+  var conn;
 
+
+  conn = new WebSocket('ws://' + window.location.host + '/ws');
+  window.conn = conn;
+
+
+conn.onmessage = function (evt) {
+  console.log("in onmessage", evt.data);
+    var messages = evt.data.split('\n');
+
+
+    // for (var i = 0; i < messages.length; i++) {
+    //     var item = document.createElement("div");
+    //     item.innerText = messages[i];
+    //     appendLog(item);
+    // }
+};
+//
+// function open(e){  if(ws){
+//     return false;
+//   }
+//   ws = new WebSocket("{{.}}");
+//   ws.onopen = function(e){
+//     print ("Open");
+//   }
+//   ws.onclose = function(e){
+//     print ("close");
+//     ws = null;
+//   }
+//   ws.onmessage = function(e){
+//     print("Response:" + e.data);
+//   }
+//   ws.onerror = function(e){
+//     print("Error" + evt.data);
+//   }
+//   return false;
+// }
+//
+//
+
+//
     function appendLog(item) {
       log.appendChild(item);
     }
-
-
-    button.onclick = function () {
+//
+//
+    document.getElementById('form').onsubmit = function () {
       console.log("clicked");
+      window.msg = msg.value;
+      window.conn = conn;
         if (!conn) {
             return false;
         }
-        if (!msg.value) {
-            return false;
-        }
-        conn.send(msg.value);
-        msg.value = "";
+        console.log("Send: " + msg.value);
+        conn.send(JSON.stringify({message: msg.value}));
         return false;
-    };
+      };
+
+//
+//     //     if (!msg.value) {
+//     //         return false;
+//     //     }
+//     //     conn.send(msg.value);
+//     //     msg.value = "";
+//     //     return false;
+//     // };
     if (window["WebSocket"]) {
       console.log("in websocket");
         conn = new WebSocket('ws://' + window.location.host + '/ws');
+        window.conn = conn;
+
+
         conn.onclose = function (evt) {
           console.log("in onclose");
             var item = document.createElement("div");
             item.innerHTML = "<b>Connection closed.</b>";
             appendLog(item);
         };
-        conn.onmessage = function (evt) {
-          console.log("in onmessage");
-            var messages = evt.data.split('\n');
-            for (var i = 0; i < messages.length; i++) {
+        const onmessage = function (evt) {
+
+          var msgText = JSON.parse(evt.data);
+          window.msgText = msgText;
+          console.log("in onmessage", msgText);
+            // for (var i = 0; i < messages.length; i++) {
                 var item = document.createElement("div");
-                item.innerText = messages[i];
+                item.innerText = msgText.message;
                 appendLog(item);
-            }
+            // }
         };
+        conn.addEventListener('message', onmessage);
+
     } else {
         var item = document.createElement("div");
         item.innerHTML = "<b>Your browser does not support WebSockets.</b>";
         appendLog(item);
     }
+//
 });
