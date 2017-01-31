@@ -19,10 +19,7 @@ type Message struct{
 
 func determineListenAddress() (string, error) {
   port := os.Getenv("PORT")
-  if port == "" {
 
-    return ""
-  }
   return ":" + port, nil
 }
 
