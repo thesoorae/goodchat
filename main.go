@@ -24,7 +24,7 @@ func determineListenAddress() (string, error) {
     return ""
   }
   return ":" + port, nil
-})
+}
 
 func main() {
   fs := http.FileServer(http.Dir("./public"))
