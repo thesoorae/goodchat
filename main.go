@@ -4,6 +4,7 @@ import (
   "log"
   "net/http"
   "github.com/gorilla/websocket"
+  "os"
 )
 
 var clients = make(map[*websocket.Conn]bool)
@@ -19,7 +20,8 @@ type Message struct{
 func determineListenAddress() (string, error) {
   port := os.Getenv("PORT")
   if port == "" {
-    return "", fmt.Errorf("$PORT not set")
+
+    return "", log.Printf("$PORT not set")
   }
   return ":" + port, nil
 }
