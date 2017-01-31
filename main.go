@@ -16,18 +16,42 @@ type Message struct{
   Message string `json:"message"`
 }
 
-func main(){
-  //file server
+func determineListenAddress() (string, error) {
+  port := os.Getenv("PORT")
+  if port == "" {
+    return "", fmt.Errorf("$PORT not set")
+  }
+  return ":" + port, nil
+}
+
+func main() {
   fs := http.FileServer(http.Dir("./public"))
   http.Handle("/", fs)
+  addr, err := determineListenAddress()
+  if err != nil {
+    log.Fatal(err)
+  }
+  // http.HandleFunc("/", hello)
   http.HandleFunc("/ws", handleConnections)
   go handleMessages()
-  log.Println("http server started on :8000")
-  err := http.ListenAndServe(":8000", nil)
-  if err!= nil {
-    log.Fatal("Listen and Serve: ", err)
-  }
+  log.Printf("Listening on %s...\n", addr)
+  if err := http.ListenAndServe(addr, nil); err != nil {
+  panic(err)
 }
+}
+
+// func main(){
+//   //file server
+//   fs := http.FileServer(http.Dir("./public"))
+//   http.Handle("/", fs)
+//   http.HandleFunc("/ws", handleConnections)
+//   go handleMessages()
+//   log.Println("http server started on :8000")
+//   err := http.ListenAndServe(":8000", nil)
+//   if err!= nil {
+//     log.Fatal("Listen and Serve: ", err)
+//   }
+// }
 
 func handleConnections(w http.ResponseWriter, r *http.Request){
   ws, err := upgrader.Upgrade(w, r, nil)
