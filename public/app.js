@@ -1,4 +1,3 @@
-import UserList = require('./users.js');
 
 document.addEventListener("DOMContentLoaded", () => {
 
