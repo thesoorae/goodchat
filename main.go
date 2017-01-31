@@ -21,10 +21,10 @@ func determineListenAddress() (string, error) {
   port := os.Getenv("PORT")
   if port == "" {
 
-    return "",
+    return ""
   }
   return ":" + port, nil
-}
+})
 
 func main() {
   fs := http.FileServer(http.Dir("./public"))
@@ -39,7 +39,7 @@ func main() {
   log.Printf("Listening on %s...\n", addr)
   if err := http.ListenAndServe(addr, nil); err != nil {
   panic(err)
-}
+  }
 }
 
 // func main(){
