@@ -1,4 +1,4 @@
-
+import UserList = require('./users.js');
 
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -66,14 +66,8 @@ document.addEventListener("DOMContentLoaded", () => {
         return false;
     };
 
-//
-//     //     if (!msg.value) {
-//     //         return false;
-//     //     }
-//     //     conn.send(msg.value);
-//     //     msg.value = "";
-//     //     return false;
-//     // };
+
+
     function renderMsg(username, msg) {
       var item = document.createElement("div");
       var user = document.createElement("h2");
