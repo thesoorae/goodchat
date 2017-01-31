@@ -12,7 +12,7 @@ var upgrader = websocket.Upgrader{}
 
 type Message struct{
   // Email string `json:"email"`
-  // Username string `json:"username"`
+  Username string `json:"username"`
   Message string `json:"message"`
 }
 

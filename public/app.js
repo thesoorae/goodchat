@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const msg = document.getElementById('input');
   const log = document.getElementById('messages');
   const form = document.getElementById('form');
+  const username = document.getElementById('username');
   var conn;
 
 
@@ -13,17 +14,17 @@ document.addEventListener("DOMContentLoaded", () => {
   window.conn = conn;
 
 
-conn.onmessage = function (evt) {
-  console.log("in onmessage", evt.data);
-    var messages = evt.data.split('\n');
-
-
-    // for (var i = 0; i < messages.length; i++) {
-    //     var item = document.createElement("div");
-    //     item.innerText = messages[i];
-    //     appendLog(item);
-    // }
-};
+// conn.onmessage = function (evt) {
+//   console.log("in onmessage", evt.data);
+//     var messages = evt.data.split('\n');
+//
+//
+//     // for (var i = 0; i < messages.length; i++) {
+//     //     var item = document.createElement("div");
+//     //     item.innerText = messages[i];
+//     //     appendLog(item);
+//     // }
+// };
 //
 // function open(e){  if(ws){
 //     return false;
@@ -61,9 +62,9 @@ conn.onmessage = function (evt) {
             return false;
         }
         console.log("Send: " + msg.value);
-        conn.send(JSON.stringify({message: msg.value}));
+        conn.send(JSON.stringify({username: username.value, message: msg.value}));
         return false;
-      };
+    };
 
 //
 //     //     if (!msg.value) {
@@ -73,6 +74,17 @@ conn.onmessage = function (evt) {
 //     //     msg.value = "";
 //     //     return false;
 //     // };
+    function renderMsg(username, msg) {
+      var item = document.createElement("div");
+      var user = document.createElement("h2");
+      user.innerHTML = username;
+      var msgItem = document.createElement("div");
+      msgItem.innerHTML = msg;
+      item.appendChild(user);
+      item.appendChild(msgItem);
+      return item;
+    }
+
     if (window["WebSocket"]) {
       console.log("in websocket");
         conn = new WebSocket('ws://' + window.location.host + '/ws');
@@ -91,8 +103,7 @@ conn.onmessage = function (evt) {
           window.msgText = msgText;
           console.log("in onmessage", msgText);
             // for (var i = 0; i < messages.length; i++) {
-                var item = document.createElement("div");
-                item.innerText = msgText.message;
+                var item = renderMsg(msgText.username, msgText.message)
                 appendLog(item);
             // }
         };
