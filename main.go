@@ -21,7 +21,7 @@ func determineListenAddress() (string, error) {
   port := os.Getenv("PORT")
   if port == "" {
 
-    return "", log.Printf("$PORT not set")
+    return "",
   }
   return ":" + port, nil
 }
