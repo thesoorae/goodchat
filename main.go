@@ -81,7 +81,7 @@ func handleConnections(w http.ResponseWriter, r *http.Request){
     log.Fatal(err)
   }
   defer ws.Close()
-  clients[ws] = "true"
+  clients[ws] = ""
 
   log.Printf("online %v", onlineusers)
 
