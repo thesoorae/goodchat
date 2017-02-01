@@ -38,10 +38,13 @@ div.sidebar {
 
 div.chat-area {
   width: 65%;
+  height:100%;
+  position: relative;
 }
 
 #form {
-  position: fixed;
+  position: absolute;
+  bottom: 10px;
 }
 
 #messages {
