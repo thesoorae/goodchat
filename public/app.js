@@ -50,7 +50,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
 //
     function appendLog(item) {
+      let doScroll = log.scrollTop === log.scrollHeight - log.clientHeight;
       log.appendChild(item);
+      if (doScroll) {
+        log.scrollTop = log.scrollHeight - log.clientHeight;
+      }
     }
 //
 //
@@ -95,7 +99,7 @@ document.addEventListener("DOMContentLoaded", () => {
             item.innerHTML = "<b>Connection closed.</b>";
             appendLog(item);
         };
-        
+
         const onmessage = function (evt) {
 
           var msgText = JSON.parse(evt.data);
