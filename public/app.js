@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const log = document.getElementById('messages');
   const form = document.getElementById('form');
   const username = document.getElementById('username');
+  const userlist = document.getElementById('users');
   var conn;
 
 
@@ -65,7 +66,11 @@ document.addEventListener("DOMContentLoaded", () => {
         return false;
     };
 
-
+    function renderUser(username){
+      var item = document.createElement("div");
+      item.innerHTML = username;
+      return item;
+    }
 
     function renderMsg(username, msg) {
       var item = document.createElement("div");
@@ -90,6 +95,7 @@ document.addEventListener("DOMContentLoaded", () => {
             item.innerHTML = "<b>Connection closed.</b>";
             appendLog(item);
         };
+        
         const onmessage = function (evt) {
 
           var msgText = JSON.parse(evt.data);

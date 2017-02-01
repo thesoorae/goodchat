@@ -9,11 +9,15 @@ html, ul, li, p, body, h2, h1, h3, {
 
 }
 
-.sidebar h1{
+.sidebar h1, h3{
   color:white;
   font-family: 'Arvo', serif;
   text-shadow: 2px 2px 8px rgb(125,180,181);
   text-align: center;
+}
+
+.sidebar h3{
+  text-align: left;
 }
 
 div.container{
