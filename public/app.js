@@ -2,13 +2,13 @@
 document.addEventListener("DOMContentLoaded", () => {
 
 
-  const msg = document.getElementById('input');
+  const input = document.getElementById('input');
   const log = document.getElementById('messages');
   const form = document.getElementById('form');
-  const username = document.getElementById('username');
+  // const username = document.getElementById('username');
   const userlist = document.getElementById('users');
   var conn;
-
+  let user = null;
 
   conn = new WebSocket('ws://' + window.location.host + '/ws');
   window.conn = conn;
@@ -56,20 +56,37 @@ document.addEventListener("DOMContentLoaded", () => {
 //
     document.getElementById('form').onsubmit = function () {
       console.log("clicked");
-      window.msg = msg.value;
+      window.msg = input.value;
       window.conn = conn;
         if (!conn) {
             return false;
         }
-        console.log("Send: " + msg.value);
-        conn.send(JSON.stringify({username: username.value, message: msg.value}));
+        if(!user){
+          user = input.value;
+          conn.send(JSON.stringify({newuser: input.value}));
+          console.log("Send: " + input.value);
+          input.placeholder = "Message";
+
+          return false
+        } else {
+          conn.send(JSON.stringify({username: user, message: input.value}));
+          console.log("Send: " + input.value);
+
+        }
+
         return false;
     };
 
     function renderUser(username){
       var item = document.createElement("div");
+      item.id = username;
       item.innerHTML = username;
-      return item;
+      document.getElementById('user-list').appendChild(item);
+    }
+
+    function removeUser(username){
+      var item = document.getElementById(username);
+      item.remove();
     }
 
     function renderMsg(username, msg) {
@@ -83,6 +100,9 @@ document.addEventListener("DOMContentLoaded", () => {
       return item;
     }
 
+
+
+
     if (window["WebSocket"]) {
       console.log("in websocket");
         conn = new WebSocket('ws://' + window.location.host + '/ws');
@@ -91,22 +111,45 @@ document.addEventListener("DOMContentLoaded", () => {
 
         conn.onclose = function (evt) {
           console.log("in onclose");
+
             var item = document.createElement("div");
             item.innerHTML = "<b>Connection closed.</b>";
             appendLog(item);
         };
-        
+
+        window.onbeforeunload = function(e){
+          conn.send(JSON.stringify({userleft: user}));
+
+        }
+
         const onmessage = function (evt) {
 
-          var msgText = JSON.parse(evt.data);
-          window.msgText = msgText;
-          console.log("in onmessage", msgText);
+          var broadcast = JSON.parse(evt.data);
+          window.broadcast = broadcast;
+          console.log("in onmessage", broadcast);
+          if(broadcast.newuser !== ""){
+            console.log("new user entered", broadcast.newuser);
+            renderUser(broadcast.newuser);
+          } else if (broadcast.userleft !== ""){
+            console.log("user left", broadcast.userleft);
+            removeUser(broadcast.userleft);
+          } else {
             // for (var i = 0; i < messages.length; i++) {
-                var item = renderMsg(msgText.username, msgText.message)
+                var item = renderMsg(broadcast.username, broadcast.message)
                 appendLog(item);
             // }
+          }
         };
+
+        // const newuser = function(e){
+        //   var newuser = JSON.parse(e.data);
+        //   window.newuser = newuser;
+        //   console.log("in newuser");
+        //   addUser(newuser.username);
+        // }
+
         conn.addEventListener('message', onmessage);
+
 
     } else {
         var item = document.createElement("div");
