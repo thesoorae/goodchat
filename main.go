@@ -16,20 +16,23 @@ import (
 
 )
 
-var clients = make(map[*websocket.Conn]bool)
+var clients = make(map[*websocket.Conn]string)
 var onlineusers = make(map[*websocket.Conn]string)
 var broadcast = make(chan Message)
 var upgrader = websocket.Upgrader{}
 var usersbroadcast = make(chan User)
 
 type Message struct{
-  // Email string `json:"email"`
+  CurrentUsers []string `json:'allusers'`
   NewUser string `json:"newuser"`
   Username string `json:"username"`
   Message string `json:"message"`
   UserLeft string `json:"userleft"`
 }
 
+type UserList struct {
+  Users []User
+}
 type User struct {
   Username string `json:"username"`
 }
@@ -54,6 +57,10 @@ type User struct {
 //   panic(err)
 //   }
 // }
+func (userlist *UserList) AddUser(user User) []User{
+  userlist.Users = append(userlist.Users, user)
+  return userlist.Users
+}
 
 func main(){
   //file server
@@ -74,19 +81,11 @@ func handleConnections(w http.ResponseWriter, r *http.Request){
     log.Fatal(err)
   }
   defer ws.Close()
-  clients[ws] = true
+  clients[ws] = "true"
+
+  log.Printf("online %v", onlineusers)
 
 
-  // for{
-  //   var newuser User
-  //   err := ws.ReadJSON(&newuser)
-  //   if err! = nil {
-  //     log.Printf("error: %v", err)
-  //     delete(clients, ws)
-  //     break
-  //   }
-  //   userbroadcast <- newuser
-  // }
 
   for{
     var msg Message
@@ -96,6 +95,15 @@ func handleConnections(w http.ResponseWriter, r *http.Request){
       delete(clients, ws)
       break
     }
+    clients[ws]= msg.NewUser
+    for _, value := range clients{
+
+      msg.CurrentUsers = append(msg.CurrentUsers, value)
+    }
+
+    log.Printf("after msg online %v", onlineusers)
+    log.Printf("after msg clients %v", clients)
+    log.Printf("msg %v", msg)
 
     broadcast <- msg
   }
