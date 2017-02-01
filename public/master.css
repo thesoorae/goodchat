@@ -39,3 +39,14 @@ div.sidebar {
 div.chat-area {
   width: 65%;
 }
+
+#form {
+  position: fixed;
+}
+
+#messages {
+    min-height: 10vh;
+    height: 95vh;
+    width: 100%;
+    overflow-y: scroll;
+}
