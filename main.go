@@ -17,15 +17,22 @@ import (
 )
 
 var clients = make(map[*websocket.Conn]bool)
+var onlineusers = make(map[*websocket.Conn]string)
 var broadcast = make(chan Message)
 var upgrader = websocket.Upgrader{}
+var usersbroadcast = make(chan User)
 
 type Message struct{
   // Email string `json:"email"`
+  NewUser string `json:"newuser"`
   Username string `json:"username"`
   Message string `json:"message"`
+  UserLeft string `json:"userleft"`
 }
 
+type User struct {
+  Username string `json:"username"`
+}
 // func determineListenAddress() (string, error) {
 //   port := os.Getenv("PORT")
 //
@@ -68,6 +75,19 @@ func handleConnections(w http.ResponseWriter, r *http.Request){
   }
   defer ws.Close()
   clients[ws] = true
+
+
+  // for{
+  //   var newuser User
+  //   err := ws.ReadJSON(&newuser)
+  //   if err! = nil {
+  //     log.Printf("error: %v", err)
+  //     delete(clients, ws)
+  //     break
+  //   }
+  //   userbroadcast <- newuser
+  // }
+
   for{
     var msg Message
     err := ws.ReadJSON(&msg)
@@ -76,9 +96,11 @@ func handleConnections(w http.ResponseWriter, r *http.Request){
       delete(clients, ws)
       break
     }
+
     broadcast <- msg
   }
 }
+
 
 func handleMessages() {
    for {
@@ -93,9 +115,34 @@ func handleMessages() {
        }
      }
    }
-
-
 }
+
+// func getUsers(){
+//   for{
+//     users := <-usersbroadcast
+//     for client := range clients {
+//          err := client.WriteJSON(newuser)
+//          if err!=nil {
+//            log.Printf("error: %v", err)
+//            client.Close()
+//            delete(clients, client)
+//          }
+//        }
+//   }
+// }
+// func handleUsers(){
+//   for {
+//     newuser := <-userbroadcast
+//     for client := range clients {
+//       err := client.WriteJSON(newuser)
+//       if err!=nil {
+//         log.Printf("error: %v", err)
+//         client.Close()
+//         delete(clients, client)
+//       }
+//     }
+//   }
+// }
 
 // func handler(w http.ResponseWriter, r *http.Request){
 //   fmt.Fprintf(w, "Hi there, I love %s!", r.URL.Path[1:])
@@ -106,3 +153,6 @@ func handleMessages() {
 //   http.ListenAndServe(":8080", nil)
 //
 // }
+
+// New code to test user?
+//
