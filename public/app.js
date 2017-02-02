@@ -51,7 +51,7 @@ document.addEventListener("DOMContentLoaded", () => {
 //
     function appendLog(item) {
       let doScroll = log.scrollTop === log.scrollHeight - log.clientHeight;
-      log.appendChild(item);
+      log.insertBefore(item, log.firstChild);
       if (doScroll) {
         log.scrollTop = log.scrollHeight - log.clientHeight;
       }
@@ -95,6 +95,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function renderMsg(username, msg) {
       var item = document.createElement("div");
+      item.classList.add('message');
       var user = document.createElement("h2");
       user.innerHTML = username;
       var msgItem = document.createElement("div");
