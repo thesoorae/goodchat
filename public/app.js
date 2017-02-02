@@ -14,41 +14,6 @@ document.addEventListener("DOMContentLoaded", function(){
   conn = new WebSocket('ws://' + window.location.host + '/ws');
   window.conn = conn;
 
-
-// conn.onmessage = function (evt) {
-//   console.log("in onmessage", evt.data);
-//     var messages = evt.data.split('\n');
-//
-//
-//     // for (var i = 0; i < messages.length; i++) {
-//     //     var item = document.createElement("div");
-//     //     item.innerText = messages[i];
-//     //     appendLog(item);
-//     // }
-// };
-//
-// function open(e){  if(ws){
-//     return false;
-//   }
-//   ws = new WebSocket("{{.}}");
-//   ws.onopen = function(e){
-//     print ("Open");
-//   }
-//   ws.onclose = function(e){
-//     print ("close");
-//     ws = null;
-//   }
-//   ws.onmessage = function(e){
-//     print("Response:" + e.data);
-//   }
-//   ws.onerror = function(e){
-//     print("Error" + evt.data);
-//   }
-//   return false;
-// }
-//
-//
-
 //
   function appendLog(item) {
     let doScroll = log.scrollTop === log.scrollHeight - log.clientHeight;
@@ -88,7 +53,7 @@ document.addEventListener("DOMContentLoaded", function(){
 
     function renderUser(list, username){
       var item = document.createElement("div");
-      item.id = username;
+      item.id = "user-item";
       item.innerHTML = username;
       list.appendChild(item);
     }
@@ -111,6 +76,7 @@ document.addEventListener("DOMContentLoaded", function(){
     }
 
 
+    console.log("websocket", window["WebSocket"]);
 
 
     if (window["WebSocket"]) {
@@ -144,26 +110,13 @@ document.addEventListener("DOMContentLoaded", function(){
               renderUser(userList, user);
             });
             console.log("currentusers", broadcast.CurrentUsers);
-          // if(broadcast.newuser !== ""){
-          //   console.log("new user entered", broadcast.newuser);
-          //   renderUser(broadcast.newuser);
-          // } else if (broadcast.userleft !== ""){
-          //   console.log("user left", broadcast.userleft);
-          //   removeUser(broadcast.userleft);
+
           } else {
-            // for (var i = 0; i < messages.length; i++) {
                 var item = renderMsg(broadcast.username, broadcast.message)
                 appendLog(item);
-            // }
           }
         };
 
-        // const newuser = function(e){
-        //   var newuser = JSON.parse(e.data);
-        //   window.newuser = newuser;
-        //   console.log("in newuser");
-        //   addUser(newuser.username);
-        // }
 
         conn.addEventListener('message', onmessage);
 
