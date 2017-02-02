@@ -1,5 +1,5 @@
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", function(){
 
 
   const input = document.getElementById('input');
@@ -140,7 +140,7 @@ document.addEventListener("DOMContentLoaded", () => {
           console.log("in onmessage", broadcast);
           if (broadcast.CurrentUsers) {
             userList.innerHTML = '';
-            broadcast.CurrentUsers.forEach(user => {
+            broadcast.CurrentUsers.forEach(function(user){
               renderUser(userList, user);
             });
             console.log("currentusers", broadcast.CurrentUsers);
