@@ -2,19 +2,41 @@ package main
 
 
 
-// import (
-//   "log"
-//   "net/http"
-//   "github.com/gorilla/websocket"
-//   "os"
-// )
-
 import (
   "log"
   "net/http"
   "github.com/gorilla/websocket"
-
+  "os"
 )
+
+func determineListenAddress() (string, error) {
+  port := os.Getenv("PORT")
+
+  return ":" + port, nil
+}
+
+func main() {
+  fs := http.FileServer(http.Dir("./public"))
+  http.Handle("/", fs)
+  addr, err := determineListenAddress()
+  if err != nil {
+    log.Fatal(err)
+  }
+  // http.HandleFunc("/", hello)
+  http.HandleFunc("/ws", handleConnections)
+  go handleMessages()
+  log.Printf("Listening on %s...\n", addr)
+  if err := http.ListenAndServe(addr, nil); err != nil {
+  panic(err)
+  }
+}
+
+// import (
+//   "log"
+//   "net/http"
+//   "github.com/gorilla/websocket"
+//
+// )
 
 var clients = make(map[*websocket.Conn]string)
 var onlineusers = make(map[*websocket.Conn]string)
@@ -30,50 +52,30 @@ type Message struct{
   UserLeft string `json:"userleft"`
 }
 
+
 type UserList struct {
   Users []User
 }
 type User struct {
   Username string `json:"username"`
 }
-// func determineListenAddress() (string, error) {
-//   port := os.Getenv("PORT")
-//
-//   return ":" + port, nil
-// }
-//
-// func main() {
-//   fs := http.FileServer(http.Dir("./public"))
-//   http.Handle("/", fs)
-//   addr, err := determineListenAddress()
-//   if err != nil {
-//     log.Fatal(err)
-//   }
-//   // http.HandleFunc("/", hello)
-//   http.HandleFunc("/ws", handleConnections)
-//   go handleMessages()
-//   log.Printf("Listening on %s...\n", addr)
-//   if err := http.ListenAndServe(addr, nil); err != nil {
-//   panic(err)
-//   }
-// }
 func (userlist *UserList) AddUser(user User) []User{
   userlist.Users = append(userlist.Users, user)
   return userlist.Users
 }
 
-func main(){
-  //file server
-  fs := http.FileServer(http.Dir("./public"))
-  http.Handle("/", fs)
-  http.HandleFunc("/ws", handleConnections)
-  go handleMessages()
-  log.Println("http server started on :8000")
-  err := http.ListenAndServe(":8000", nil)
-  if err!= nil {
-    log.Fatal("Listen and Serve: ", err)
-  }
-}
+// func main(){
+//   //file server
+//   fs := http.FileServer(http.Dir("./public"))
+//   http.Handle("/", fs)
+//   http.HandleFunc("/ws", handleConnections)
+//   go handleMessages()
+//   log.Println("http server started on :8000")
+//   err := http.ListenAndServe(":8000", nil)
+//   if err!= nil {
+//     log.Fatal("Listen and Serve: ", err)
+//   }
+// }
 
 func handleConnections(w http.ResponseWriter, r *http.Request){
   ws, err := upgrader.Upgrade(w, r, nil)
