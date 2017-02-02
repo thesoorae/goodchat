@@ -12,6 +12,21 @@
 
   <body>
     <div class="container">
+
+      <div id="myModal" class="modal">
+        <div class="modal-content">
+          <form id="user-form">
+            <h2>Welcome to BetterChat! </h2>
+              <h2> Please enter your name to enter the chat room</h2>
+
+            <input type="text" id="user-input" placeholder="username" />
+            <input type="submit" value="Sign In" class="submit-btn"/>
+          </form>
+        </div>
+
+      </div>
+
+
       <div class="sidebar">
         <h1>Better Chat </h1>
 
@@ -22,19 +37,19 @@
     </div>
 
       <div class="chat-area">
-        <div id="nav-bar">
-          <form id="user-form">
-            <input type="text" id="user-input" placeholder="username" />
-            <input type="submit" value="Sign In" />
-          </form>
-        </div>
+
+
+        <span id="user-title" >
+        </span>
+
+
+
 
         <div id="messages">
         </div>
 
 
         <form id="form">
-        <!-- <input type="text" id="username" placeholder="Username"/> -->
           <div class="input-bar">
             <input type="text" id="input" class="input" placeholder="Type something..."/>
             <input type="submit" class="submit-btn" name="" value="Send">

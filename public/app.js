@@ -7,6 +7,8 @@ document.addEventListener("DOMContentLoaded", function(){
   const form = document.getElementById('form');
   const usernameInput = document.getElementById('user-input');
   const userList = document.getElementById('user-list');
+  var modal = document.getElementById('myModal');
+
   // const username = document.getElementById('username');
   var conn;
   let user = null;
@@ -29,9 +31,13 @@ document.addEventListener("DOMContentLoaded", function(){
     if(!conn){
       return false;
     }
+
     user = usernameInput.value;
     conn.send(JSON.stringify({newuser: user}));
     console.log("send:" + user);
+    document.getElementById('user-title').innerHTML = "Hiya " + user + "!";
+    modal.style.display = "none";
+
     return false
   }
 
