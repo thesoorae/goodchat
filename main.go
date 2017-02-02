@@ -8,34 +8,6 @@ package main
 //   "github.com/gorilla/websocket"
 //   "os"
 // )
-
-import (
-  "log"
-  "net/http"
-  "github.com/gorilla/websocket"
-
-)
-
-var clients = make(map[*websocket.Conn]string)
-var onlineusers = make(map[*websocket.Conn]string)
-var broadcast = make(chan Message)
-var upgrader = websocket.Upgrader{}
-var usersbroadcast = make(chan User)
-
-type Message struct{
-  CurrentUsers []string `json:'allusers'`
-  NewUser string `json:"newuser"`
-  Username string `json:"username"`
-  Message string `json:"message"`
-  UserLeft string `json:"userleft"`
-}
-
-type UserList struct {
-  Users []User
-}
-type User struct {
-  Username string `json:"username"`
-}
 // func determineListenAddress() (string, error) {
 //   port := os.Getenv("PORT")
 //
@@ -57,10 +29,48 @@ type User struct {
 //   panic(err)
 //   }
 // }
-func (userlist *UserList) AddUser(user User) []User{
-  userlist.Users = append(userlist.Users, user)
-  return userlist.Users
+import (
+  "log"
+  "net/http"
+  "github.com/gorilla/websocket"
+  "sync"
+
+)
+
+var clients = make(map[*websocket.Conn]User)
+var onlineusers = make(map[*websocket.Conn]string)
+var broadcast = make(chan Message)
+var upgrader = websocket.Upgrader{}
+var usersbroadcast = make(chan UserList)
+// CurrentUsers []string `json:'allusers'`
+
+type Message struct{
+  NewUser string `json:"newuser"`
+  Username string `json:"username"`
+  Message string `json:"message"`
+  UserLeft string `json:"userleft"`
 }
+
+type UserList struct {
+  CurrentUsers []string `json:'currentusers'`
+}
+type User struct {
+  Username string `json:"username"`
+  Socket *websocket.Conn
+  mu sync.Mutex
+}
+
+func (u * User) send(v interface{}) error{
+  u.mu.Lock()
+  defer u.mu.Unlock()
+  return u.Socket.WriteJSON(v)
+}
+
+
+// func (userlist *UserList) AddUser(user User) []User{
+//   userlist.Users = append(userlist.Users, user)
+//   return userlist.Users
+// }
 
 func main(){
   //file server
@@ -68,6 +78,7 @@ func main(){
   http.Handle("/", fs)
   http.HandleFunc("/ws", handleConnections)
   go handleMessages()
+  go handleUsers()
   log.Println("http server started on :8000")
   err := http.ListenAndServe(":8000", nil)
   if err!= nil {
@@ -81,76 +92,65 @@ func handleConnections(w http.ResponseWriter, r *http.Request){
     log.Fatal(err)
   }
   defer ws.Close()
-  clients[ws] = ""
 
-  log.Printf("online %v", onlineusers)
-
-
+  newuser :=User{Socket: ws}
+  clients[ws] = newuser
 
   for{
     var msg Message
     err := ws.ReadJSON(&msg)
-    if err != nil {
-      log.Printf("error: %v", err)
-      delete(clients, ws)
-      break
+      if err != nil {
+        log.Printf("error: %v", err)
+        delete(clients, ws)
+        break
+      }
+    if msg.NewUser != "" {
+      client := clients[ws]
+      client.Username = msg.NewUser
+      var users []string
+      for _, value := range clients{
+        users = append(users, value.Username)
+      }
+
+      updatedusers := UserList{CurrentUsers: users}
+      usersbroadcast <- updatedusers
     }
-    clients[ws]= msg.NewUser
-    for _, value := range clients{
-
-      msg.CurrentUsers = append(msg.CurrentUsers, value)
-    }
-
-    log.Printf("after msg online %v", onlineusers)
-    log.Printf("after msg clients %v", clients)
-    log.Printf("msg %v", msg)
-
     broadcast <- msg
   }
 }
 
+func handleUsers(){
+  for{
+    userlist := <- usersbroadcast
+    for _, client := range clients {
+      log.Printf("users list: %v", userlist)
+
+      err := client.send(userlist)
+      if err != nil {
+        log.Printf("error: %v", err)
+        client.Socket.Close()
+        delete(clients, client.Socket)
+      }
+    }
+  }
+}
 
 func handleMessages() {
    for {
      msg := <-broadcast
 
-     for client := range clients {
-       err := client.WriteJSON(msg)
+     for _, client := range clients {
+       err := client.send(msg)
        if err != nil {
          log.Printf("error: %v", err)
-         client.Close()
-         delete(clients, client)
+         client.Socket.Close()
+         delete(clients, client.Socket)
        }
      }
    }
 }
 
-// func getUsers(){
-//   for{
-//     users := <-usersbroadcast
-//     for client := range clients {
-//          err := client.WriteJSON(newuser)
-//          if err!=nil {
-//            log.Printf("error: %v", err)
-//            client.Close()
-//            delete(clients, client)
-//          }
-//        }
-//   }
-// }
-// func handleUsers(){
-//   for {
-//     newuser := <-userbroadcast
-//     for client := range clients {
-//       err := client.WriteJSON(newuser)
-//       if err!=nil {
-//         log.Printf("error: %v", err)
-//         client.Close()
-//         delete(clients, client)
-//       }
-//     }
-//   }
-// }
+
 
 // func handler(w http.ResponseWriter, r *http.Request){
 //   fmt.Fprintf(w, "Hi there, I love %s!", r.URL.Path[1:])

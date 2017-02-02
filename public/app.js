@@ -146,12 +146,19 @@ document.addEventListener("DOMContentLoaded", () => {
           }
         };
 
+        const onusers = function(e){
+
+          var usersbroadcast = JSON.parse(e.data);
+          console.log("in onusers", usersbroadcast);
+        }
+
         // const newuser = function(e){
         //   var newuser = JSON.parse(e.data);
         //   window.newuser = newuser;
         //   console.log("in newuser");
         //   addUser(newuser.username);
         // }
+        conn.addEventListener('currentusers', onusers);
 
         conn.addEventListener('message', onmessage);
 

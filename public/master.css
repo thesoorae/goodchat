@@ -33,13 +33,14 @@ div.sidebar {
   width: 20%;
   background-color: rgb(224,239,241);
   padding: 20px;
-  height: 100%;
+  height: 95vh;
 }
 
 div.chat-area {
   width: 65%;
   height:100%;
   position: relative;
+
 }
 
 #form {
@@ -47,9 +48,16 @@ div.chat-area {
   bottom: 10px;
 }
 
-#messages {
+div#messages {
     min-height: 10vh;
     height: 95vh;
     width: 100%;
     overflow-y: scroll;
+
+    /*display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    position: absolute;
+    bottom: 50px;*/
+
 }
