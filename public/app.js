@@ -6,8 +6,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const log = document.getElementById('messages');
   const form = document.getElementById('form');
   const usernameInput = document.getElementById('user-input');
+  const userList = document.getElementById('user-list');
   // const username = document.getElementById('username');
-  const userlist = document.getElementById('users');
   var conn;
   let user = null;
 
@@ -86,11 +86,11 @@ document.addEventListener("DOMContentLoaded", () => {
       return false;
   };
 
-    function renderUser(username){
+    function renderUser(list, username){
       var item = document.createElement("div");
       item.id = username;
       item.innerHTML = username;
-      document.getElementById('user-list').appendChild(item);
+      list.appendChild(item);
     }
 
     function removeUser(username){
@@ -139,14 +139,17 @@ document.addEventListener("DOMContentLoaded", () => {
           window.broadcast = broadcast;
           console.log("in onmessage", broadcast);
           if (broadcast.CurrentUsers) {
+            userList.innerHTML = '';
+            broadcast.CurrentUsers.forEach(user => {
+              renderUser(userList, user);
+            });
             console.log("currentusers", broadcast.CurrentUsers);
-          }
-          if(broadcast.newuser !== ""){
-            console.log("new user entered", broadcast.newuser);
-            renderUser(broadcast.newuser);
-          } else if (broadcast.userleft !== ""){
-            console.log("user left", broadcast.userleft);
-            removeUser(broadcast.userleft);
+          // if(broadcast.newuser !== ""){
+          //   console.log("new user entered", broadcast.newuser);
+          //   renderUser(broadcast.newuser);
+          // } else if (broadcast.userleft !== ""){
+          //   console.log("user left", broadcast.userleft);
+          //   removeUser(broadcast.userleft);
           } else {
             // for (var i = 0; i < messages.length; i++) {
                 var item = renderMsg(broadcast.username, broadcast.message)
