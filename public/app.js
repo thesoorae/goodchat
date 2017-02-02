@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const input = document.getElementById('input');
   const log = document.getElementById('messages');
   const form = document.getElementById('form');
+  const usernameInput = document.getElementById('user-input')
   // const username = document.getElementById('username');
   const userlist = document.getElementById('users');
   var conn;
@@ -58,6 +59,17 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 //
 //
+
+    document.getElementById('user-form').onsubmit = function(){
+      if(!conn){
+        return false;
+      }
+      user = usernameInput.value;
+      conn.send(JSON.stringify({newuser: user}));
+      console.log("send:" + user);
+      return false
+    }
+
     document.getElementById('form').onsubmit = function () {
       console.log("clicked");
       window.msg = input.value;
@@ -65,18 +77,11 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!conn) {
             return false;
         }
-        if(!user){
-          user = input.value;
-          conn.send(JSON.stringify({newuser: input.value}));
-          console.log("Send: " + input.value);
-          input.placeholder = "Message";
 
-          return false
-        } else {
           conn.send(JSON.stringify({username: user, message: input.value}));
           console.log("Send: " + input.value);
 
-        }
+        
 
         return false;
     };
