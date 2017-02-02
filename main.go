@@ -23,7 +23,7 @@ var upgrader = websocket.Upgrader{}
 var usersbroadcast = make(chan User)
 
 type Message struct{
-  CurrentUsers []string `json:'allusers'`
+  CurrentUsers []string `json:'currentusers'`
   NewUser string `json:"newuser"`
   Username string `json:"username"`
   Message string `json:"message"`
@@ -95,10 +95,21 @@ func handleConnections(w http.ResponseWriter, r *http.Request){
       delete(clients, ws)
       break
     }
-    clients[ws]= msg.NewUser
-    for _, value := range clients{
+    if msg.NewUser != "" || msg.UserLeft != "" {
+      if msg.NewUser != "" {
+        clients[ws]= msg.NewUser
+      }
+      length := len(clients)
+      usersArray := make([]string, length, 2 * length)
+      log.Printf("in usersArray", clients)
+      for _, value := range clients{
+        log.Printf("value", value)
+        if value != msg.UserLeft {
+          usersArray = append(usersArray, value)
+        }
+      }
+      msg.CurrentUsers = usersArray
 
-      msg.CurrentUsers = append(msg.CurrentUsers, value)
     }
 
     log.Printf("after msg online %v", onlineusers)

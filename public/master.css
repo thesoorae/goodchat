@@ -99,7 +99,7 @@ div.message {
 
 #messages {
     min-height: 10vh;
-    height: 95vh;
+    height: 85vh;
     width: 100%;
     overflow-y: scroll;
     display: flex;
@@ -107,4 +107,5 @@ div.message {
     /*justify-content: flex-end;*/
     position: absolute;
     bottom: 90px;
+    top: 35px;
 }

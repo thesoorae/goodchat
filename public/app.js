@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const input = document.getElementById('input');
   const log = document.getElementById('messages');
   const form = document.getElementById('form');
+  const usernameInput = document.getElementById('user-input');
   // const username = document.getElementById('username');
   const userlist = document.getElementById('users');
   var conn;
@@ -49,37 +50,41 @@ document.addEventListener("DOMContentLoaded", () => {
 //
 
 //
-    function appendLog(item) {
-      let doScroll = log.scrollTop === log.scrollHeight - log.clientHeight;
-      log.insertBefore(item, log.firstChild);
-      if (doScroll) {
-        log.scrollTop = log.scrollHeight - log.clientHeight;
-      }
+  function appendLog(item) {
+    let doScroll = log.scrollTop === log.scrollHeight - log.clientHeight;
+    log.insertBefore(item, log.firstChild);
+    if (doScroll) {
+      log.scrollTop = log.scrollHeight - log.clientHeight;
     }
+  }
 //
 //
-    document.getElementById('form').onsubmit = function () {
-      console.log("clicked");
-      window.msg = input.value;
-      window.conn = conn;
-        if (!conn) {
-            return false;
-        }
-        if(!user){
-          user = input.value;
-          conn.send(JSON.stringify({newuser: input.value}));
-          console.log("Send: " + input.value);
-          input.placeholder = "Message";
 
-          return false
-        } else {
-          conn.send(JSON.stringify({username: user, message: input.value}));
-          console.log("Send: " + input.value);
+  document.getElementById('user-form').onsubmit = function(){
+    if(!conn){
+      return false;
+    }
+    user = usernameInput.value;
+    conn.send(JSON.stringify({newuser: user}));
+    console.log("send:" + user);
+    return false
+  }
 
-        }
+  document.getElementById('form').onsubmit = function () {
+    console.log("clicked");
+    window.msg = input.value;
+    window.conn = conn;
+      if (!conn) {
+          return false;
+      }
 
-        return false;
-    };
+        conn.send(JSON.stringify({username: user, message: input.value}));
+        console.log("Send: " + input.value);
+
+
+
+      return false;
+  };
 
     function renderUser(username){
       var item = document.createElement("div");
@@ -133,6 +138,9 @@ document.addEventListener("DOMContentLoaded", () => {
           var broadcast = JSON.parse(evt.data);
           window.broadcast = broadcast;
           console.log("in onmessage", broadcast);
+          if (broadcast.CurrentUsers) {
+            console.log("currentusers", broadcast.CurrentUsers);
+          }
           if(broadcast.newuser !== ""){
             console.log("new user entered", broadcast.newuser);
             renderUser(broadcast.newuser);
