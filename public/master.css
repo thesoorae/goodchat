@@ -98,10 +98,10 @@ div.chat-area {
 
 #form {
   position: absolute;
-  bottom: 10px;
+  bottom: 0px;
   width: 100%;
   margin-top: 20px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 div#messages {
@@ -172,6 +172,7 @@ div.message {
   justify-content: flex-start;
   vertical-align: bottom;
   width: 65%;
+  margin: 10px;
 }
 .message h2{
   font-weight: 500;
@@ -179,6 +180,7 @@ div.message {
   margin-right: 10px;
   font-size: 20px;
   color: #680148;
+  width: 100px;
 }
 .message div{
   font-size: 20px;

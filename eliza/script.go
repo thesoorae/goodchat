@@ -41,7 +41,7 @@ var (
 		"cannot":   []string{"cannot", "can't"},
 		"everyone": []string{"everyone", "everybody", "nobody", "noone"},
 		"be":       []string{"be", "am", "is", "are", "was"},
-		"hi":    		[]string{"hi", "yo", "hey", "whatsup"},
+		"hi":    		[]string{"hi", "yo", "hey", "whatsup", "What's Up"},
 	}
 
 	quit = []string{"bye", "goodbye", "quit", "ciao", "see you"}
