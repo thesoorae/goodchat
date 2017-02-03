@@ -40,6 +40,9 @@ import (
   "log"
   "net/http"
   "github.com/gorilla/websocket"
+  eliza "./eliza"
+
+  "time"
 
 )
 func main(){
@@ -59,10 +62,8 @@ func main(){
 
 
 var clients = make(map[*websocket.Conn]string)
-var onlineusers = make(map[*websocket.Conn]string)
 var broadcast = make(chan Message)
 var upgrader = websocket.Upgrader{}
-var usersbroadcast = make(chan User)
 
 type Message struct{
   CurrentUsers []string `json:'currentusers'`
@@ -73,19 +74,6 @@ type Message struct{
 }
 
 
-type UserList struct {
-  Users []User
-}
-type User struct {
-  Username string `json:"username"`
-}
-func (userlist *UserList) AddUser(user User) []User{
-  userlist.Users = append(userlist.Users, user)
-  return userlist.Users
-}
-
-
-
 func handleConnections(w http.ResponseWriter, r *http.Request){
   ws, err := upgrader.Upgrade(w, r, nil)
   if err != nil{
@@ -94,21 +82,25 @@ func handleConnections(w http.ResponseWriter, r *http.Request){
   defer ws.Close()
   clients[ws] = ""
 
-  log.Printf("online %v", onlineusers)
-
-
-
   for{
     var msg Message
+    var elizamsg Message
+
     err := ws.ReadJSON(&msg)
     if err != nil {
       log.Printf("error: %v", err)
       delete(clients, ws)
       break
     }
+    log.Printf("The message %v", msg)
+
     if msg.NewUser != "" || msg.UserLeft != "" {
       if msg.NewUser != "" {
         clients[ws]= msg.NewUser
+        if len(clients) > 2{
+          elizamsg.Username = "Eliza"
+          elizamsg.Message = "Three's a crowd, I'm outta here."
+        }
       }
       length := len(clients)
       usersArray := make([]string, length, 2 * length)
@@ -119,17 +111,36 @@ func handleConnections(w http.ResponseWriter, r *http.Request){
           usersArray = append(usersArray, value)
         }
       }
+      if length == 2 {
+        usersArray = append(usersArray, "Eliza")
+      }
+      log.Printf("users Array %v", usersArray)
       msg.CurrentUsers = usersArray
 
     }
+    if len(clients) == 2 {
+        log.Printf(" only one user online")
+        if msg.NewUser != "" {
+          elizamsg.Username = "Eliza"
+          elizamsg.Message ="Hi I'm Eliza"
+          log.Printf("eliza's response", elizamsg)
+        } else if msg.Message != ""{
+          response, err := eliza.AnalyseString(string(msg.Message))
+          if err!= nil {
+            panic(err)
+          }
+          elizamsg.Username = "Eliza"
 
-    log.Printf("after msg online %v", onlineusers)
-    log.Printf("after msg clients %v", clients)
-    log.Printf("msg %v", msg)
+          elizamsg.Message = response
+        }
+      }
 
-    broadcast <- msg
+          broadcast <- msg
+          time.AfterFunc(1 * time.Second, func(){broadcast <- elizamsg})
+      }
+
   }
-}
+
 
 
 func handleMessages() {
@@ -137,6 +148,7 @@ func handleMessages() {
      msg := <-broadcast
 
      for client := range clients {
+
        err := client.WriteJSON(msg)
        if err != nil {
          log.Printf("error: %v", err)
@@ -146,43 +158,3 @@ func handleMessages() {
      }
    }
 }
-
-// func getUsers(){
-//   for{
-//     users := <-usersbroadcast
-//     for client := range clients {
-//          err := client.WriteJSON(newuser)
-//          if err!=nil {
-//            log.Printf("error: %v", err)
-//            client.Close()
-//            delete(clients, client)
-//          }
-//        }
-//   }
-// }
-// func handleUsers(){
-//   for {
-//     newuser := <-userbroadcast
-//     for client := range clients {
-//       err := client.WriteJSON(newuser)
-//       if err!=nil {
-//         log.Printf("error: %v", err)
-//         client.Close()
-//         delete(clients, client)
-//       }
-//     }
-//   }
-// }
-
-// func handler(w http.ResponseWriter, r *http.Request){
-//   fmt.Fprintf(w, "Hi there, I love %s!", r.URL.Path[1:])
-// }
-//
-// func main() {
-//   http.HandleFunc("/", handler)
-//   http.ListenAndServe(":8080", nil)
-//
-// }
-
-// New code to test user?
-//

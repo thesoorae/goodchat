@@ -12,6 +12,7 @@ document.addEventListener("DOMContentLoaded", function(){
   // const username = document.getElementById('username');
   var conn;
   let user = null;
+  let currentUsers = [];
 
   conn = new WebSocket('ws://' + window.location.host + '/ws');
   window.conn = conn;
@@ -43,8 +44,6 @@ document.addEventListener("DOMContentLoaded", function(){
 
   document.getElementById('form').onsubmit = function () {
     console.log("clicked");
-    window.msg = input.value;
-    window.conn = conn;
       if (!conn) {
           return false;
       }
@@ -57,6 +56,12 @@ document.addEventListener("DOMContentLoaded", function(){
 
       return false;
   };
+
+  function elizaInitial(){
+    conn.send(JSON.stringify({ newuser: "Eliza"}));
+
+  }
+
 
     function renderUser(list, username){
       var item = document.createElement("div");
@@ -116,16 +121,25 @@ document.addEventListener("DOMContentLoaded", function(){
             broadcast.CurrentUsers.forEach(function(user){
               renderUser(userList, user);
             });
-            console.log("currentusers", broadcast.CurrentUsers);
+            currentUsers = broadcast.CurrentUsers.filter(function(u){
+              return !(u == "");
+            });
+
 
           } else {
                 var item = renderMsg(broadcast.username, broadcast.message)
                 appendLog(item);
           }
+          console.log("currentUsers", currentUsers);
+          // if(currentUsers.length == 1 && !currentUsers.includes("Eliza")){
+          //   setTimeout(elizaInitial, 3000);
+          // }
+
         };
 
 
         conn.addEventListener('message', onmessage);
+
 
 
     } else {

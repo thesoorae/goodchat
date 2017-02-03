@@ -170,7 +170,7 @@ div.message {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
-  vertical-align: middle;
+  vertical-align: bottom;
   width: 65%;
 }
 .message h2{
@@ -178,7 +178,9 @@ div.message {
   margin: 0;
   margin-right: 10px;
   font-size: 20px;
+  color: #680148;
 }
 .message div{
-  font-size: 16px;
+  font-size: 20px;
+
 }
