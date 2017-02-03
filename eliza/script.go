@@ -41,7 +41,7 @@ var (
 		"cannot":   []string{"cannot", "can't"},
 		"everyone": []string{"everyone", "everybody", "nobody", "noone"},
 		"be":       []string{"be", "am", "is", "are", "was"},
-		"hi":    		[]string{"hi", "yo", "hey", "whatsup", "What's Up"},
+		"hi":    		[]string{"hi", "yo", "hey", "whatsup"},
 	}
 
 	quit = []string{"bye", "goodbye", "quit", "ciao", "see you"}
@@ -65,7 +65,7 @@ var keywordMap = map[string]keyword{
 		Decompositions:[]*decomp{
 			&decomp{
 				AssemblyNext: 0,
-				Pattern:      "(.*)@hi(.*)",
+				Pattern:      "(.*)@hi(.* )",
 				Assemblies: []string{
 					"Yo, how's it hangin'?",
 					"What's up?",
