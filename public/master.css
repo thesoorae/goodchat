@@ -11,11 +11,11 @@ html, ul, li, p, body, h2, h1, h3, div, input{
 h1{
   font-size: 30px;
   font-weight: bold;
-  margin: 20px;
+  margin: 20px 0;
 }
 h3{
   font-size: 20px;
-  margin: 20px;
+  margin: 20px 0;
 }
 
 .sidebar h1, h3{
@@ -51,7 +51,7 @@ div.container{
 div.sidebar {
   width: 20%;
   background-color: rgb(224,239,241);
-  padding: 20px;
+  padding: 30px;
   height: 100%;
 }
 
@@ -106,7 +106,7 @@ div.chat-area {
 
 div#messages {
     min-height: 10vh;
-    height: 90vh;
+    height: 70vh;
     width: 100%;
     overflow-y: scroll;
     display: flex;
@@ -118,7 +118,7 @@ div#messages {
 #user-item{
   color: #680148;
   font-family: 'Arvo', serif;
-  padding-left: 10px;
+  margin-left: 20px;
 }
 
 div.nav-bar {
@@ -164,4 +164,21 @@ span#user-title{
   text-transform: uppercase;
   text-align: left;
   padding: 30px;
+}
+
+div.message {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  vertical-align: middle;
+  width: 65%;
+}
+.message h2{
+  font-weight: 500;
+  margin: 0;
+  margin-right: 10px;
+  font-size: 20px;
+}
+.message div{
+  font-size: 16px;
 }

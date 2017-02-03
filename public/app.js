@@ -51,6 +51,7 @@ document.addEventListener("DOMContentLoaded", function(){
 
         conn.send(JSON.stringify({username: user, message: input.value}));
         console.log("Send: " + input.value);
+        input.value = "";
 
 
 
