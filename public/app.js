@@ -83,18 +83,33 @@ document.addEventListener("DOMContentLoaded", function(){
       item.remove();
     }
 
+    function timeNow() {
+      var d = new Date(),
+          h = (d.getHours()<10?'0':'') + d.getHours(),
+          m = (d.getMinutes()<10?'0':'') + d.getMinutes();
+          return h + ':' + m;
+    }
     function renderMsg(username, msg) {
       var img = userImage(username);
       var item = document.createElement("div");
       item.classList.add('message');
       var messageBody = document.createElement("div");
       messageBody.className = "message-body";
-      var name = document.createElement("div");
-      name.className="name";
-      name.innerHTML = username;
+      var nameTime = document.createElement("div");
+      var namediv = document.createElement("div");
+      var timediv = document.createElement("div");
+      nameTime.className = "nameTime";
+      namediv.className="name";
+      timediv.className="time";
+      var time = new Date(new Date().getTime()).toLocaleTimeString();
+      namediv.innerHTML = username;
+      timediv.innerHTML = time;
+
+      nameTime.appendChild(namediv);
+      nameTime.appendChild(timediv);
       var msgItem = document.createElement("div");
       msgItem.innerHTML = msg;
-      messageBody.appendChild(name);
+      messageBody.appendChild(nameTime);
       messageBody.appendChild(msgItem);
       item.appendChild(img);
       item.appendChild(messageBody);

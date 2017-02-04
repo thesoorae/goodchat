@@ -127,6 +127,7 @@ div#messages {
     position: absolute;
     bottom: 100px;
     top: 80px;
+    padding: 20px;
 }
 
 div#user-item{
@@ -198,7 +199,7 @@ div.message {
   vertical-align: bottom;
   width: 65%;
   margin: 10px;
-  min-height: 25px;
+  min-height: 50px;
 }
 /*.message h2{
   font-weight: 900;
@@ -215,10 +216,19 @@ div.message-body{
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 25px;
-}
 
+}
+div.nameTime{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  margin-bottom: 5px;
+}
 div.name{
+  font-size: 14px;
+}
+div.time{
+  margin-left: 20px;
   font-size: 12px;
   color: #2c2d30;
 }
