@@ -86,13 +86,18 @@ document.addEventListener("DOMContentLoaded", function(){
       var img = userImage(username);
       var item = document.createElement("div");
       item.classList.add('message');
-      var user = document.createElement("h2");
-      user.innerHTML = username;
+      var messageBody = document.createElement("div");
+      messageBody.className = "message-body";
+      var name = document.createElement("div");
+      name.className="name";
+      name.innerHTML = username;
       var msgItem = document.createElement("div");
       msgItem.innerHTML = msg;
+      messageBody.appendChild(name);
+      messageBody.appendChild(msgItem);
       item.appendChild(img);
-      item.appendChild(user);
-      item.appendChild(msgItem);
+      item.appendChild(messageBody);
+
       return item;
     }
 

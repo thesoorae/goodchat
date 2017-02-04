@@ -200,7 +200,7 @@ div.message {
   margin: 10px;
   min-height: 25px;
 }
-.message h2{
+/*.message h2{
   font-weight: 900;
   margin: 0;
   margin-right: 10px;
@@ -208,11 +208,17 @@ div.message {
   color: #2c2d30!important;
   width: 100px;
   height: 25px;
-}
-.message div{
-  font-size: 16px;
+}*/
+div.message-body{
+  /*font-size: 16px;*/
+  margin: 10px 20px;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: space-between;
   height: 25px;
+}
+
+div.name{
+  font-size: 12px;
+  color: #2c2d30;
 }
