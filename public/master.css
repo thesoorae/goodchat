@@ -72,6 +72,8 @@ div.sidebar {
 
 .sidebar-subtitle {
   color: #baf2e9;
+  font-size: 24px;
+  margin: 20px 0px 0px 0px;
 }
 
 div.chat-area {
@@ -198,6 +200,7 @@ div.nav-bar {
     margin: 10% auto; /* 15% from the top and centered */
     padding: 20px;
     width: 50%; /* Could be more or less, depending on screen size */
+    min-width: 520px;
 }
 .modal-content *{
   margin: 10px;
@@ -256,9 +259,11 @@ div.nameTime{
   flex-direction: row;
   justify-content: flex-start;
   margin-bottom: 5px;
+  min-height: 18px;
 }
 div.name{
   font-size: 14px;
+
 }
 div.time{
   margin-left: 20px;
