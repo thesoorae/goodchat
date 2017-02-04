@@ -65,6 +65,28 @@ div.sidebar {
   padding: 30px;
   height: 100%;
   min-width: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+div.top-sidebar{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  height: 60%;
+}
+
+
+div.author {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin-bottom: 10px;
+}
+
+div.author-name{
+  width: 100px;
 }
 
 .logo {
@@ -183,6 +205,9 @@ div#user-item{
   margin-left: 20px;
   padding: 0;
 
+}
+#user-item img{
+  -webkit-transform: scale(0.5);
 }
 
 div.nav-bar {
