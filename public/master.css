@@ -4,7 +4,7 @@ html, ul, li, p, body, h2, h1, h3, div, input{
   margin: 0;
   padding: 0;
   border: 0;
-  font-family: 'Arvo', serif;
+  font-family: 'Dosis', sans-serif;
   font-size: inherit;
 }
 
@@ -14,14 +14,20 @@ h1{
   margin: 20px 0;
 }
 h3{
-  font-size: 20px;
+  font-size: 17px;
   margin: 20px 0;
+  color: #baf2e9
 }
 
- h1, h3{
+ h1 {
   color:white;
   text-shadow: 2px 2px 8px rgb(125,180,181);
   text-align: left;
+}
+
+p {
+  color: #baf2e9;
+  font-size: 17px;
 }
 
 
@@ -50,6 +56,7 @@ div.container{
 
 div.sidebar {
   width: 20%;
+  /*background-color: #1ebea5;*/
   background-color: #1ebea5;
   padding: 30px;
   height: 100%;
@@ -79,6 +86,30 @@ div.chat-area {
   min-height: 600px;
 }
 
+.signin-btn {
+  vertical-align: top;
+  height: 40px;
+  font-size: 18px;
+  font-size: 18px;
+  background-color: #1ebea5;
+  color: #fff;
+  border-radius: 3px;
+  border: 1px solid #1cdbbd;
+  outline: 0px;
+  /*font-family: 'Open Sans', sans-serif;*/
+  padding: 0 20px;
+  box-shadow: 0 1px 3px #18ceb2;
+  font-family: 'Dosis', sans-serif;
+  cursor: pointer;
+}
+
+.signin-btn:hover {
+  /*background-color: #18ceb2;*/
+
+  box-shadow: 0px 0px 20px -2px #a2efe3;
+  background-color: #1ebea5;
+}
+
 
 .submit-btn {
   vertical-align: top;
@@ -92,7 +123,8 @@ div.chat-area {
   /*font-family: 'Open Sans', sans-serif;*/
   padding: 0 20px;
   box-shadow: 0 1px 3px #18ceb2;
-  font-family: 'Arvo', serif;
+  font-family: 'Dosis', sans-serif;
+  cursor: pointer;
 
   /*background-color: #104da1;
   border: 1px solid #3260c7;
@@ -103,7 +135,8 @@ div.chat-area {
 }
 
 .submit-btn:hover {
-  background-color: #18ceb2;
+  box-shadow: 0px 0px 20px -2px #18ceb2;
+  background-color: #42d6bf;
 
   /*box-shadow: 0px 0px 20px -2px blue;
   background-color: #1254af;*/
@@ -137,7 +170,7 @@ div#user-item{
 
 }
 #user-item div{
-  color: white;
+  color: #baf2e9;
   font-family: 'Arvo', serif;
   margin: auto;
   margin-left: 20px;
