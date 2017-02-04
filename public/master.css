@@ -75,7 +75,8 @@ div.chat-area {
   flex-direction column;
   justify-content: space-around;
   margin-left: 30px;
-
+  min-width: 900px;
+  min-height: 600px;
 }
 
 
@@ -117,7 +118,7 @@ div.chat-area {
 }
 
 div#messages {
-    min-height: 10vh;
+    min-height: 453px;
     height: 70vh;
     width: 100%;
     overflow-y: scroll;
