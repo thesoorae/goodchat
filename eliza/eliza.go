@@ -4,7 +4,6 @@ package eliza
 import (
 	"errors"
 	"fmt"
-	"os"
 	"regexp"
 	"sort"
 	"strings"
