@@ -135,7 +135,7 @@ var keywordMap = map[string]keyword{
 		},
 	},
   "how": keyword{
-		Weight:2,
+		Weight:1,
 		Decompositions:[]*decomp{
 			&decomp{
 				AssemblyNext: 0,
@@ -444,6 +444,8 @@ var keywordMap = map[string]keyword{
 					"Would you prefer if I weren't (2) ?",
 					"Perhaps I am (2) in your fantasies.",
 					"Do you sometimes think I am (2) ?",
+          "goto what",
+
 				},
 			},
 			&decomp{
@@ -522,10 +524,10 @@ var keywordMap = map[string]keyword{
 				Assemblies: []string{
 					"What would it mean to you if you got (2) ?",
 					"Why do you want (2) ?",
-					"Suppose you got (2) soon ?",
+					"What would you do if you got (2) ?",
 					"What if you never got (2) ?",
 					"What would getting (2) mean to you ?",
-					"What does wanting (2) have to do with this discussion ?",
+					"What does wanting (2) have to do with what we're talking about ?",
 				},
 			},
 //added
@@ -573,7 +575,7 @@ var keywordMap = map[string]keyword{
 				Pattern:      "(.*) ?i @belief (.*) i ?(.*)",
 				Assemblies: []string{
 					"Do you really think so ?",
-					"But you are not sure you (3).",
+					"It seems that you're not sure you (3).",
 					"Do you really doubt you (3) ?",
 				},
 			},
@@ -671,11 +673,11 @@ var keywordMap = map[string]keyword{
 				Pattern:      "(.*) ?you (.*) me ?(.*)",
 				Assemblies: []string{
 					"Why do you think I (2) you ?",
-					"You like to think I (2) you -",
+					"You like to think I (2) you ...",
 					"What makes you think I (2) you ?",
 					"Really, I (2) you ?",
 					"Do you wish to believe I (2) you ?",
-					"Suppose I did (2) you -",
+					"Suppose I did (2) you ...",
 					"Does someone else believe I (2) you ?",
 				},
 			},
