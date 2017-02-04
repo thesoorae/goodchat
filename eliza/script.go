@@ -9,7 +9,7 @@ var (
 		"dreamt":    "dreamed",
 		"dreams":    "dream",
 		"maybe":     "perhaps",
-		"how":       "what",
+		// "how":       "what",
 		"when":      "what",
 		"certainly": "yes",
 		"machine":   "computer",
@@ -62,8 +62,8 @@ type decomp struct {
 
 var keywordMap = map[string]keyword{
 
-  	"Eliza?": keyword{
-  		Weight:10,
+  	"eliza": keyword{
+  		Weight:0,
   		Decompositions:[]*decomp{
   			&decomp{
   				AssemblyNext: 0,
@@ -76,8 +76,51 @@ var keywordMap = map[string]keyword{
   			},
   		},
   	},
+    "should": keyword{
+      		Weight:1,
+      		Decompositions:[]*decomp{
+      			&decomp{
+      				AssemblyNext: 0,
+      				Pattern:      "(.*)",
+      				Assemblies: []string{
+      					"Is there such a thing as should?",
+                "Does should really matter?",
+                "What do you believe deep down?",
+                "Is that something you truly desire?",
+      				},
+      			},
+      		},
+      	},
+    "boris": keyword{
+      Weight:3,
+      Decompositions:[]*decomp{
+        &decomp{
+          AssemblyNext: 0,
+          Pattern:      "(.*)",
+          Assemblies: []string{
+            "Boris is great, isn't he?",
+            "Talk about a stand-up guy",
+            "Have I mentioned lately what a great dev Boris is?",
+          },
+        },
+      },
+    },
+    "soo-rae": keyword{
+      Weight:3,
+      Decompositions:[]*decomp{
+        &decomp{
+          AssemblyNext: 0,
+          Pattern:      "(.*)",
+          Assemblies: []string{
+            "Soo-Rae is the smartest person I know",
+            "Soo-Rae is great, isn't she?",
+            "Soo-Rae? She would be a tremendous asset to any company.",
+          },
+        },
+      },
+    },
 	"hi": keyword{
-		Weight:3,
+		Weight:1,
 		Decompositions:[]*decomp{
 			&decomp{
 				AssemblyNext: 0,
@@ -91,8 +134,22 @@ var keywordMap = map[string]keyword{
 			},
 		},
 	},
+  "how": keyword{
+		Weight:2,
+		Decompositions:[]*decomp{
+			&decomp{
+				AssemblyNext: 0,
+				Pattern:      "(.*) ?how are (.*)",
+				Assemblies: []string{
+					"I'm fine how are you?",
+					"I'm doing well, and yourself?",
+					"I'm well, thanks for asking. How are you?",
+				},
+			},
+		},
+	},
 	"hey": keyword{
-		Weight:3,
+		Weight:1,
 		Decompositions:[]*decomp{
 			&decomp{
 				AssemblyNext: 0,
@@ -106,7 +163,7 @@ var keywordMap = map[string]keyword{
 
 
 	"xnone": keyword{
-		Weight: 0,
+		Weight: 3,
 		Decompositions: []*decomp{
 			&decomp{
 				AssemblyNext: 0,
@@ -381,11 +438,12 @@ var keywordMap = map[string]keyword{
 				AssemblyNext: 0,
 				Pattern:      "(.*) ?are you ?(.*)",
 				Assemblies: []string{
+          "Thanks for asking, what do you think?",
+          "That's not important. What about you?",
 					"Why are you interested in whether I am (2) or not ?",
 					"Would you prefer if I weren't (2) ?",
 					"Perhaps I am (2) in your fantasies.",
 					"Do you sometimes think I am (2) ?",
-					"goto what",
 				},
 			},
 			&decomp{
@@ -739,11 +797,12 @@ var keywordMap = map[string]keyword{
 				AssemblyNext: 0,
 				Pattern:      "(.*)",
 				Assemblies: []string{
+          "What answer would please you most ?",
+
 					"Why do you ask ?",
 					"Does that question interest you ?",
 					"What is it you really wanted to know ?",
 					"Are such questions much on your mind ?",
-					"What answer would please you most ?",
 					"What do you think ?",
 					"What comes to mind when you ask that ?",
 					"Have you asked such questions before ?",

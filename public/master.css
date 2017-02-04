@@ -255,7 +255,7 @@ div.nameTime{
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
 }
 div.name{
   font-size: 14px;

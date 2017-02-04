@@ -7,7 +7,7 @@ import (
 	"regexp"
 	"sort"
 	"strings"
-
+	"log"
 
 )
 
@@ -38,6 +38,7 @@ func AnalyseString(this string) (string, error) {
 	// Third, make a list of all keywords in the input words sorted into
 	// descending weight
 	keywords := identifyKeywords(words)
+
 
 	// Fourth, run through each keyword and match against decomposition
 	// sequences until a match is found. If a match is found then process
@@ -103,7 +104,11 @@ func (a byWeight) Less(i, j int) bool { return a[i].Weight > a[j].Weight }
 
 func identifyKeywords(words []string) (keys []keyword) {
 	for _, w := range words {
+		log.Printf("checking keyword: %s", w)
+
 		if k, ok := keywordMap[w]; ok {
+			log.Printf("identified keyword: %s", w)
+
 			keys = append(keys, k)
 		}
 	}
@@ -116,6 +121,7 @@ func identifyKeywords(words []string) (keys []keyword) {
 func processKeywords(keywords []keyword, words []string) ([]string, error) {
 
 	for _, kw := range keywords {
+
 		// Get the pattern for the keyword and attempt to match it to the words we have
 		for _, d := range kw.Decompositions {
 

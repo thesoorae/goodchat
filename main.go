@@ -126,10 +126,10 @@ func handleConnections(w http.ResponseWriter, r *http.Request){
     if len(clients) == 2 && msg.Message == "Eliza?" {
           elizaOn = true
           elizamsg.Username = "Eliza"
-          elizamsg.Message ="Hi! What do you want to talk about?"
+          elizamsg.Message ="I'm here! What do you want to talk about?"
         }
 
-    if elizaOn && msg.Message != ""{
+    if elizaOn && msg.Message != "" && msg.Message != "Eliza?"{
           response, err := eliza.AnalyseString(msg.Message)
           if err!= nil {
             panic(err)
