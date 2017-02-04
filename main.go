@@ -4,7 +4,7 @@ package main
 //
 // UNCOMMENT FOR HEROKU (BELOW)
 
-//
+
 // import (
 //   "log"
 //   "net/http"
@@ -44,7 +44,7 @@ import (
   "log"
   "net/http"
   "github.com/gorilla/websocket"
-eliza "./eliza"
+   eliza "./eliza"
 
   "time"
 
@@ -86,6 +86,8 @@ func handleConnections(w http.ResponseWriter, r *http.Request){
   defer ws.Close()
   clients[ws] = ""
 
+  var elizaOn bool
+
   for{
     var msg Message
     var elizamsg Message
@@ -101,7 +103,8 @@ func handleConnections(w http.ResponseWriter, r *http.Request){
     if msg.NewUser != "" || msg.UserLeft != "" {
       if msg.NewUser != "" {
         clients[ws]= msg.NewUser
-        if len(clients) > 2{
+        if len(clients) == 4{
+          elizaOn = true
           elizamsg.Username = "Eliza"
           elizamsg.Message = "Three's a crowd, I'm outta here."
         }
@@ -120,11 +123,13 @@ func handleConnections(w http.ResponseWriter, r *http.Request){
       msg.CurrentUsers = usersArray
 
     }
-    if len(clients) == 2 {
-        if msg.NewUser != "" {
+    if len(clients) == 2 && msg.Message == "Eliza?" {
+          elizaOn = true
           elizamsg.Username = "Eliza"
-          elizamsg.Message ="Hi I'm Eliza"
-        } else if msg.Message != ""{
+          elizamsg.Message ="Hi! What do you want to talk about?"
+        }
+
+    if elizaOn && msg.Message != ""{
           response, err := eliza.AnalyseString(msg.Message)
           if err!= nil {
             panic(err)
@@ -133,13 +138,20 @@ func handleConnections(w http.ResponseWriter, r *http.Request){
 
           elizamsg.Message = response
         }
+    if len(clients) == 4 && msg.Message != ""{
+        elizaOn = false
       }
+      log.Printf("Eliza's message %v", elizamsg)
+      log.Printf("Eliza on %v", elizaOn)
 
-          broadcast <- msg
-          time.AfterFunc(1 * time.Second, func(){broadcast <- elizamsg})
+    broadcast <- msg
+    if elizaOn {
+    time.AfterFunc(1 * time.Second, func(){
+        broadcast <- elizamsg})}
       }
+    }
 
-  }
+
 
 
 

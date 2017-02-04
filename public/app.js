@@ -51,23 +51,31 @@ document.addEventListener("DOMContentLoaded", function(){
         conn.send(JSON.stringify({username: user, message: input.value}));
         console.log("Send: " + input.value);
         input.value = "";
+        input.placeholder = "";
 
 
 
       return false;
   };
 
-  function elizaInitial(){
-    conn.send(JSON.stringify({ newuser: "Eliza"}));
-
-  }
-
+    function userImage(username){
+      if(username !== ""){
+      var elem = document.createElement("img");
+      elem.src = 'https://robohash.org/' + username +'.png';
+      elem.setAttribute("height", "50");
+      elem.setAttribute("width", "50");
+      return elem;}
+    }
 
     function renderUser(list, username){
-      var item = document.createElement("div");
-      item.id = "user-item";
-      item.innerHTML = username;
-      list.appendChild(item);
+      var img = userImage(username);
+      var userDiv = document.createElement("div");
+      userDiv.id = "user-item";
+      userDiv.appendChild(img);
+      var userName = document.createElement('div');
+      userName.innerHTML = username;
+      userDiv.appendChild(userName);
+      list.appendChild(userDiv);
     }
 
     function removeUser(username){
@@ -75,15 +83,37 @@ document.addEventListener("DOMContentLoaded", function(){
       item.remove();
     }
 
+    function timeNow() {
+      var d = new Date(),
+          h = (d.getHours()<10?'0':'') + d.getHours(),
+          m = (d.getMinutes()<10?'0':'') + d.getMinutes();
+          return h + ':' + m;
+    }
     function renderMsg(username, msg) {
+      var img = userImage(username);
       var item = document.createElement("div");
       item.classList.add('message');
-      var user = document.createElement("h2");
-      user.innerHTML = username;
+      var messageBody = document.createElement("div");
+      messageBody.className = "message-body";
+      var nameTime = document.createElement("div");
+      var namediv = document.createElement("div");
+      var timediv = document.createElement("div");
+      nameTime.className = "nameTime";
+      namediv.className="name";
+      timediv.className="time";
+      var time = new Date(new Date().getTime()).toLocaleTimeString();
+      namediv.innerHTML = username;
+      timediv.innerHTML = time;
+
+      nameTime.appendChild(namediv);
+      nameTime.appendChild(timediv);
       var msgItem = document.createElement("div");
       msgItem.innerHTML = msg;
-      item.appendChild(user);
-      item.appendChild(msgItem);
+      messageBody.appendChild(nameTime);
+      messageBody.appendChild(msgItem);
+      item.appendChild(img);
+      item.appendChild(messageBody);
+
       return item;
     }
 
@@ -118,12 +148,13 @@ document.addEventListener("DOMContentLoaded", function(){
           console.log("in onmessage", broadcast);
           if (broadcast.CurrentUsers) {
             userList.innerHTML = '';
-            broadcast.CurrentUsers.forEach(function(user){
-              renderUser(userList, user);
+            var cu = broadcast.CurrentUsers.filter(function(u){
+              return !(u == "");});
+            cu.forEach(function(us){
+              renderUser(userList, us);
             });
-            currentUsers = broadcast.CurrentUsers.filter(function(u){
-              return !(u == "");
-            });
+
+
 
 
           } else {
