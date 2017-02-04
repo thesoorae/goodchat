@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", function(){
     user = usernameInput.value;
     conn.send(JSON.stringify({newuser: user}));
     console.log("send:" + user);
-    document.getElementById('user-title').innerHTML = "Hiya " + user + "!";
+    document.getElementById('user-title').innerHTML = "@" + user;
     modal.style.display = "none";
 
     return false
