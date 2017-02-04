@@ -4,7 +4,7 @@ html, ul, li, p, body, h2, h1, h3, div, input{
   margin: 0;
   padding: 0;
   border: 0;
-  font-family: 'Arvo', serif;
+  font-family: 'Dosis', sans-serif;
   font-size: inherit;
 }
 
@@ -14,11 +14,12 @@ h1{
   margin: 20px 0;
 }
 h3{
-  font-size: 18px;
+  font-size: 17px;
   margin: 20px 0;
+  color: #baf2e9
 }
 
- h1, h3{
+ h1 {
   color:white;
   text-shadow: 2px 2px 8px rgb(125,180,181);
   text-align: left;
@@ -26,6 +27,7 @@ h3{
 
 p {
   color: #baf2e9;
+  font-size: 17px;
 }
 
 
@@ -97,7 +99,7 @@ div.chat-area {
   /*font-family: 'Open Sans', sans-serif;*/
   padding: 0 20px;
   box-shadow: 0 1px 3px #18ceb2;
-  font-family: 'Arvo', serif;
+  font-family: 'Dosis', sans-serif;
   cursor: pointer;
 }
 
@@ -121,7 +123,7 @@ div.chat-area {
   /*font-family: 'Open Sans', sans-serif;*/
   padding: 0 20px;
   box-shadow: 0 1px 3px #18ceb2;
-  font-family: 'Arvo', serif;
+  font-family: 'Dosis', sans-serif;
   cursor: pointer;
 
   /*background-color: #104da1;
