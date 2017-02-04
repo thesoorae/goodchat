@@ -59,11 +59,12 @@ document.addEventListener("DOMContentLoaded", function(){
   };
 
     function userImage(username){
+      if(username !== ""){
       var elem = document.createElement("img");
       elem.src = 'https://robohash.org/' + username +'.png';
       elem.setAttribute("height", "50");
       elem.setAttribute("width", "50");
-      return elem;
+      return elem;}
     }
 
     function renderUser(list, username){
