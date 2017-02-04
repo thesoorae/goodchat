@@ -65,7 +65,7 @@ var keywordMap = map[string]keyword{
 		Decompositions:[]*decomp{
 			&decomp{
 				AssemblyNext: 0,
-				Pattern:      "@hi(.* )",
+				Pattern:      "(.* )@hi(.* )",
 				Assemblies: []string{
 					"Yo, how's it hangin'?",
 					"What's up?",
