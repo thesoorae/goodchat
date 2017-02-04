@@ -58,17 +58,23 @@ document.addEventListener("DOMContentLoaded", function(){
       return false;
   };
 
-  function elizaInitial(){
-    conn.send(JSON.stringify({ newuser: "Eliza"}));
-
-  }
-
+    function userImage(username){
+      var elem = document.createElement("img");
+      elem.src = 'https://robohash.org/' + username +'.png';
+      elem.setAttribute("height", "50");
+      elem.setAttribute("width", "50");
+      return elem;
+    }
 
     function renderUser(list, username){
-      var item = document.createElement("div");
-      item.id = "user-item";
-      item.innerHTML = username;
-      list.appendChild(item);
+      var img = userImage(username);
+      var userDiv = document.createElement("div");
+      userDiv.id = "user-item";
+      userDiv.appendChild(img);
+      var userName = document.createElement('div');
+      userName.innerHTML = username;
+      userDiv.appendChild(userName);
+      list.appendChild(userDiv);
     }
 
     function removeUser(username){
@@ -77,12 +83,14 @@ document.addEventListener("DOMContentLoaded", function(){
     }
 
     function renderMsg(username, msg) {
+      var img = userImage(username);
       var item = document.createElement("div");
       item.classList.add('message');
       var user = document.createElement("h2");
       user.innerHTML = username;
       var msgItem = document.createElement("div");
       msgItem.innerHTML = msg;
+      item.appendChild(img);
       item.appendChild(user);
       item.appendChild(msgItem);
       return item;
@@ -119,12 +127,13 @@ document.addEventListener("DOMContentLoaded", function(){
           console.log("in onmessage", broadcast);
           if (broadcast.CurrentUsers) {
             userList.innerHTML = '';
-            broadcast.CurrentUsers.forEach(function(user){
-              renderUser(userList, user);
+            var cu = broadcast.CurrentUsers.filter(function(u){
+              return !(u == "");});
+            cu.forEach(function(us){
+              renderUser(userList, us);
             });
-            currentUsers = broadcast.CurrentUsers.filter(function(u){
-              return !(u == "");
-            });
+
+
 
 
           } else {

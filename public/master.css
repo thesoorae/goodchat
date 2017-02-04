@@ -129,11 +129,19 @@ div#messages {
     top: 80px;
 }
 
-#user-item{
-  color: #baf2e9;
+div#user-item{
+  display:flex;
+  flex-direction: row;
+  justify-content: flex-start;
+
+}
+#user-item div{
+  color: white;
   font-family: 'Arvo', serif;
+  margin: auto;
   margin-left: 20px;
-  margin-bottom: 5px;
+  padding: 0;
+
 }
 
 div.nav-bar {
@@ -153,7 +161,7 @@ div.nav-bar {
 }
 .modal-content {
     background-color: #1ebea5;
-    margin: 20% auto; /* 15% from the top and centered */
+    margin: 10% auto; /* 15% from the top and centered */
     padding: 20px;
     width: 50%; /* Could be more or less, depending on screen size */
 }
