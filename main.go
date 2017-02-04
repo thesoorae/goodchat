@@ -1,62 +1,66 @@
 package main
+
 //
 //
 // UNCOMMENT FOR HEROKU (BELOW)
 
-// import (
-//   "log"
-//   "net/http"
-//   "github.com/gorilla/websocket"
-//   "os"
-// )
-//
-// func determineListenAddress() (string, error) {
-//   port := os.Getenv("PORT")
-//
-//   return ":" + port, nil
-// }
-//
-// func main() {
-//   fs := http.FileServer(http.Dir("./public"))
-//   http.Handle("/", fs)
-//   addr, err := determineListenAddress()
-//   if err != nil {
-//     log.Fatal(err)
-//   }
-//   // http.HandleFunc("/", hello)
-//   http.HandleFunc("/ws", handleConnections)
-//   go handleMessages()
-//   log.Printf("Listening on %s...\n", addr)
-//   if err := http.ListenAndServe(addr, nil); err != nil {
-//   panic(err)
-//   }
-// }
-
-//// HEROKU DEPLOYMENT (ABOVE)
-
-//UNCOMMENT FOR LOCAL HOST (BELOW)
 
 import (
   "log"
   "net/http"
   "github.com/gorilla/websocket"
-  eliza "./eliza"
-
+  "os"
   "time"
-
+  eliza "goodchat/eliza"
 )
-func main(){
-  //file server
+
+func determineListenAddress() (string, error) {
+  port := os.Getenv("PORT")
+
+  return ":" + port, nil
+}
+
+func main() {
   fs := http.FileServer(http.Dir("./public"))
   http.Handle("/", fs)
+  addr, err := determineListenAddress()
+  if err != nil {
+    log.Fatal(err)
+  }
+  // http.HandleFunc("/", hello)
   http.HandleFunc("/ws", handleConnections)
   go handleMessages()
-  log.Println("http server started on :8000")
-  err := http.ListenAndServe(":8000", nil)
-  if err!= nil {
-    log.Fatal("Listen and Serve: ", err)
+  log.Printf("Listening on %s...\n", addr)
+  if err := http.ListenAndServe(addr, nil); err != nil {
+  panic(err)
   }
 }
+
+//// HEROKU DEPLOYMENT (ABOVE)
+
+//UNCOMMENT FOR LOCAL HOST (BELOW)
+
+// import (
+//   "log"
+//   "net/http"
+//   "github.com/gorilla/websocket"
+// eliza "goodchat/eliza"
+//
+//   "time"
+//
+// )
+// func main(){
+//   //file server
+//   fs := http.FileServer(http.Dir("./public"))
+//   http.Handle("/", fs)
+//   http.HandleFunc("/ws", handleConnections)
+//   go handleMessages()
+//   log.Println("http server started on :8000")
+//   err := http.ListenAndServe(":8000", nil)
+//   if err!= nil {
+//     log.Fatal("Listen and Serve: ", err)
+//   }
+// }
 
 ///////////LOCALHOST ABOVE
 
@@ -104,7 +108,6 @@ func handleConnections(w http.ResponseWriter, r *http.Request){
       }
       length := len(clients)
       usersArray := make([]string, length, 2 * length)
-      log.Printf("in usersArray", clients)
       for _, value := range clients{
         log.Printf("value", value)
         if value != msg.UserLeft {
@@ -114,18 +117,15 @@ func handleConnections(w http.ResponseWriter, r *http.Request){
       if length == 2 {
         usersArray = append(usersArray, "Eliza")
       }
-      log.Printf("users Array %v", usersArray)
       msg.CurrentUsers = usersArray
 
     }
     if len(clients) == 2 {
-        log.Printf(" only one user online")
         if msg.NewUser != "" {
           elizamsg.Username = "Eliza"
           elizamsg.Message ="Hi I'm Eliza"
-          log.Printf("eliza's response", elizamsg)
         } else if msg.Message != ""{
-          response, err := eliza.AnalyseString(string(msg.Message))
+          response, err := eliza.AnalyseString(msg.Message)
           if err!= nil {
             panic(err)
           }

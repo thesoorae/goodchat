@@ -4,16 +4,14 @@ package eliza
 import (
 	"errors"
 	"fmt"
-	"os"
 	"regexp"
 	"sort"
 	"strings"
 
-	"github.com/necrophonic/log"
+
 )
 
 func init() {
-	log.InitFromString(os.Getenv("ELIZA_LOG_LEVEL"))
 }
 
 // Analyse performs psychoanalysis on the given sentance
@@ -31,9 +29,9 @@ func AnalyseString(this string) (string, error) {
 	// could be combined - but they're laid out like this to more clearly
 	// document the alogrithm.
 
+
 	// Firstly split sentance into words separated by spaces
 	words := split(strings.Trim(this, "\n"))
-
 	// Second, perform pre-substitution in the word list
 	words = preSubstitute(words)
 
@@ -63,7 +61,6 @@ func split(said string) []string {
 }
 
 func preSubstitute(words []string) []string {
-	log.Trace("Running pre substitutions")
 	for i, w := range words {
 		if sub, ok := pre[w]; ok {
 			words[i] = sub
@@ -73,7 +70,6 @@ func preSubstitute(words []string) []string {
 }
 
 func postSubstitute(words []string) []string {
-	log.Trace("Running post substitutions")
 	for i, w := range words {
 		if sub, ok := post[w]; ok {
 			words[i] = sub
@@ -106,11 +102,8 @@ func (a byWeight) Swap(i, j int)      { a[i], a[j] = a[j], a[i] }
 func (a byWeight) Less(i, j int) bool { return a[i].Weight > a[j].Weight }
 
 func identifyKeywords(words []string) (keys []keyword) {
-	log.Debug("Attempting to identify keywords")
 	for _, w := range words {
-		log.Tracef("Checking if '%s' is a keyword", w)
 		if k, ok := keywordMap[w]; ok {
-			log.Tracef("Identified keyword -> '%s'", w)
 			keys = append(keys, k)
 		}
 	}
@@ -141,13 +134,11 @@ func processKeywords(keywords []keyword, words []string) ([]string, error) {
 			}
 
 			sentance := strings.Join(words, " ")
-			log.Tracef("Process keywords: Attempt to match pattern '%s' to '%s'\n", pattern, sentance)
 
 			re := regexp.MustCompile(pattern)
 			results := re.FindStringSubmatch(sentance)
 			if len(results) > 0 {
 				resassmbly := chooseAssembly(d)
-				log.Debugf("Process keywords: Matched regex [%s] -> now using assembly [%s]\n", pattern, resassmbly)
 
 				for i, match := range results {
 					// Before the matched text is subbed back in, it needs to post substituted
