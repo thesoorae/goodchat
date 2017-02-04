@@ -1,5 +1,4 @@
 package main
-import eliza "./eliza"
 
 //
 //
@@ -11,9 +10,8 @@ import (
   "net/http"
   "github.com/gorilla/websocket"
   "os"
-
   "time"
-
+  eliza "goodchat/eliza"
 )
 
 func determineListenAddress() (string, error) {
