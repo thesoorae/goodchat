@@ -108,7 +108,6 @@ func handleConnections(w http.ResponseWriter, r *http.Request){
       }
       length := len(clients)
       usersArray := make([]string, length, 2 * length)
-      log.Printf("in usersArray", clients)
       for _, value := range clients{
         log.Printf("value", value)
         if value != msg.UserLeft {
@@ -118,18 +117,15 @@ func handleConnections(w http.ResponseWriter, r *http.Request){
       if length == 2 {
         usersArray = append(usersArray, "Eliza")
       }
-      log.Printf("users Array %v", usersArray)
       msg.CurrentUsers = usersArray
 
     }
     if len(clients) == 2 {
-        log.Printf(" only one user online")
         if msg.NewUser != "" {
           elizamsg.Username = "Eliza"
           elizamsg.Message ="Hi I'm Eliza"
-          log.Printf("eliza's response", elizamsg)
         } else if msg.Message != ""{
-          response, err := eliza.AnalyseString(string(msg.Message))
+          response, err := eliza.AnalyseString(msg.Message)
           if err!= nil {
             panic(err)
           }

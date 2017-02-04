@@ -8,6 +8,7 @@ import (
 	"sort"
 	"strings"
 
+
 )
 
 func init() {
@@ -28,9 +29,9 @@ func AnalyseString(this string) (string, error) {
 	// could be combined - but they're laid out like this to more clearly
 	// document the alogrithm.
 
+
 	// Firstly split sentance into words separated by spaces
 	words := split(strings.Trim(this, "\n"))
-
 	// Second, perform pre-substitution in the word list
 	words = preSubstitute(words)
 

@@ -60,12 +60,27 @@ type decomp struct {
 
 var keywordMap = map[string]keyword{
 
-	"": keyword{
-		Weight:1,
+	"hi": keyword{
+		Weight:3,
 		Decompositions:[]*decomp{
 			&decomp{
 				AssemblyNext: 0,
-				Pattern:      "(.* )@hi(.* )",
+				Pattern:      "(.*)",
+				Assemblies: []string{
+					"Yo, how's it hangin'?",
+					"What's up?",
+					"What's going on?",
+					"Lay it on me.",
+				},
+			},
+		},
+	},
+	"hey": keyword{
+		Weight:3,
+		Decompositions:[]*decomp{
+			&decomp{
+				AssemblyNext: 0,
+				Pattern:      "(.*)",
 				Assemblies: []string{
 					"Yo, how's it hangin'?",
 					"What's up?",
@@ -78,14 +93,16 @@ var keywordMap = map[string]keyword{
 
 
 	"xnone": keyword{
-		Weight: 1,
+		Weight: 0,
 		Decompositions: []*decomp{
 			&decomp{
 				AssemblyNext: 0,
 				Pattern:      "(.*)",
 				Assemblies: []string{
-					"I'm not sure I understand you fully.",
+					"What do you want to talk about?",
 					"Please go on.",
+					"Tell me about yourself.",
+					"Tell me more.",
 					"What does that suggest to you ?",
 					"Do you feel strongly about discussing such things ?",
 				},
