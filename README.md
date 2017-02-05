@@ -102,7 +102,7 @@ func handleMessages() {
 ##Features to be Implemented in the Future
 
 * Private Messaging
-
 * Emojis
-
 * Stored chats that persist to a database
+* Notifications when a user enters/exits
+* Multiple rooms or channels
