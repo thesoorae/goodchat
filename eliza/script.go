@@ -9,7 +9,7 @@ var (
 		"dreamt":    "dreamed",
 		"dreams":    "dream",
 		"maybe":     "perhaps",
-		"how":       "what",
+		// "how":       "what",
 		"when":      "what",
 		"certainly": "yes",
 		"machine":   "computer",
@@ -34,14 +34,16 @@ var (
 
 	synonyms = map[string][]string{
 		"belief":   []string{"belief", "feel", "think", "believe", "wish"},
-		"family":   []string{"family", "mother", "mom", "father", "dad", "sister", "brother", "wife", "children", "child"},
-		"desire":   []string{"desire", "want", "need"},
-		"sad":      []string{"sad", "unhappy", "depressed", "sick"},
-		"happy":    []string{"happy", "elated", "glad", "better"},
+		"family":   []string{"family", "mother", "mom", "father", "dad", "sister", "brother", "wife", "children", "child", "partner", "boyfriend", "girlfriend", "boo"},
+		"desire":   []string{"desire", "want", "need", "wanna"},
+		"sad":      []string{"sad", "unhappy", "depressed", "sick", "stressed", "anxious", "frustrated"},
+		"happy":    []string{"happy", "elated", "glad", "better", "good", "great", "wonderful"},
 		"cannot":   []string{"cannot", "can't"},
-		"everyone": []string{"everyone", "everybody", "nobody", "noone"},
+		"everyone": []string{"everyone", "everybody", "nobody", "noone", "no one"},
 		"be":       []string{"be", "am", "is", "are", "was"},
 		"hi":    		[]string{"hi", "yo", "hey", "whatsup"},
+    "like":    	[]string{"like", "enjoy", "do", "often", "love to"},
+
 	}
 
 	quit = []string{"bye", "goodbye", "quit", "ciao", "see you"}
@@ -60,14 +62,71 @@ type decomp struct {
 
 var keywordMap = map[string]keyword{
 
+  	"eliza": keyword{
+  		Weight:0,
+  		Decompositions:[]*decomp{
+  			&decomp{
+  				AssemblyNext: 0,
+  				Pattern:      "(.*)",
+  				Assemblies: []string{
+  					"I'm here.",
+            "Yes?",
+            "Do you want to talk?",
+  				},
+  			},
+  		},
+  	},
+    "should": keyword{
+      		Weight:1,
+      		Decompositions:[]*decomp{
+      			&decomp{
+      				AssemblyNext: 0,
+      				Pattern:      "(.*)",
+      				Assemblies: []string{
+      					"Is there such a thing as should?",
+                "Does should really matter?",
+                "What do you believe deep down?",
+                "Is that something you truly desire?",
+      				},
+      			},
+      		},
+      	},
+    "boris": keyword{
+      Weight:3,
+      Decompositions:[]*decomp{
+        &decomp{
+          AssemblyNext: 0,
+          Pattern:      "(.*)",
+          Assemblies: []string{
+            "Boris is great, isn't he?",
+            "Talk about a stand-up guy",
+            "Have I mentioned lately what a great dev Boris is?",
+          },
+        },
+      },
+    },
+    "soo-rae": keyword{
+      Weight:3,
+      Decompositions:[]*decomp{
+        &decomp{
+          AssemblyNext: 0,
+          Pattern:      "(.*)",
+          Assemblies: []string{
+            "Soo-Rae is the smartest person I know",
+            "Soo-Rae is great, isn't she?",
+            "Soo-Rae? She would be a tremendous asset to any company.",
+          },
+        },
+      },
+    },
 	"hi": keyword{
-		Weight:3,
+		Weight:1,
 		Decompositions:[]*decomp{
 			&decomp{
 				AssemblyNext: 0,
 				Pattern:      "(.*)",
 				Assemblies: []string{
-					"Yo, how's it hangin'?",
+					"How's it hangin'?",
 					"What's up?",
 					"What's going on?",
 					"Lay it on me.",
@@ -75,17 +134,28 @@ var keywordMap = map[string]keyword{
 			},
 		},
 	},
+  "how": keyword{
+		Weight:1,
+		Decompositions:[]*decomp{
+			&decomp{
+				AssemblyNext: 0,
+				Pattern:      "(.*) ?how are (.*)",
+				Assemblies: []string{
+					"I'm fine how are you?",
+					"I'm doing well, and yourself?",
+					"I'm well, thanks for asking. How are you?",
+				},
+			},
+		},
+	},
 	"hey": keyword{
-		Weight:3,
+		Weight:1,
 		Decompositions:[]*decomp{
 			&decomp{
 				AssemblyNext: 0,
 				Pattern:      "(.*)",
 				Assemblies: []string{
-					"Yo, how's it hangin'?",
-					"What's up?",
-					"What's going on?",
-					"Lay it on me.",
+					"goto hi",
 				},
 			},
 		},
@@ -93,7 +163,7 @@ var keywordMap = map[string]keyword{
 
 
 	"xnone": keyword{
-		Weight: 0,
+		Weight: 3,
 		Decompositions: []*decomp{
 			&decomp{
 				AssemblyNext: 0,
@@ -103,8 +173,8 @@ var keywordMap = map[string]keyword{
 					"Please go on.",
 					"Tell me about yourself.",
 					"Tell me more.",
-					"What does that suggest to you ?",
-					"Do you feel strongly about discussing such things ?",
+					"What does that suggest to you?",
+					"Do you feel strongly about discussing that?",
 				},
 			},
 		},
@@ -117,15 +187,16 @@ var keywordMap = map[string]keyword{
 				AssemblyNext: 0,
 				Pattern:      "(.*)",
 				Assemblies: []string{
-					"Please don't apologise.",
+					"Please don't apologize.",
 					"Apologies are not necessary.",
 					"I've told you that apologies are not required.",
+					"Don't be sorry! Please, continue.",
 				},
 			},
 		},
 	},
 
-	"apologise": keyword{
+	"apologize": keyword{
 		Weight: 1,
 		Decompositions: []*decomp{
 			&decomp{
@@ -147,9 +218,9 @@ var keywordMap = map[string]keyword{
 				Assemblies: []string{
 					"Do you often think of (2) ?",
 					"Does thinking of (2) bring anything else to mind ?",
-					"What else do you recollect ?",
+					"What else do you remember ?",
 					"Why do you recollect (2) just now ?",
-					"What in the present situation reminds you of (2) ?",
+					"What right now reminds you of (2) ?",
 					"What is the connection between me and (2) ?",
 				},
 			},
@@ -208,7 +279,7 @@ var keywordMap = map[string]keyword{
 				Assemblies: []string{
 					"What does that dream suggest to you ?",
 					"Do you dream often ?",
-					"What persons appear in your dreams ?",
+					"Who appears in your dreams ?",
 					"Do you believe that dreams have something to do with your problems ?",
 				},
 			},
@@ -224,7 +295,7 @@ var keywordMap = map[string]keyword{
 				Assemblies: []string{
 					"You don't seem quite certain.",
 					"Why the uncertain tone ?",
-					"Can't you be more positive ?",
+					"Try to be more positive ?",
 					"You aren't sure ?",
 					"Don't you know ?",
 				},
@@ -316,7 +387,7 @@ var keywordMap = map[string]keyword{
 				AssemblyNext: 0,
 				Pattern:      "(.*) ",
 				Assemblies: []string{
-					"How do you do.	Please state your problem.",
+					"Hi there.	What do you want to talk about?",
 					"Hi.	What seems to be your problem ?",
 				},
 			},
@@ -367,11 +438,14 @@ var keywordMap = map[string]keyword{
 				AssemblyNext: 0,
 				Pattern:      "(.*) ?are you ?(.*)",
 				Assemblies: []string{
+          "Thanks for asking, what do you think?",
+          "That's not important. What about you?",
 					"Why are you interested in whether I am (2) or not ?",
 					"Would you prefer if I weren't (2) ?",
 					"Perhaps I am (2) in your fantasies.",
 					"Do you sometimes think I am (2) ?",
-					"goto what",
+          "goto what",
+
 				},
 			},
 			&decomp{
@@ -450,13 +524,25 @@ var keywordMap = map[string]keyword{
 				Assemblies: []string{
 					"What would it mean to you if you got (2) ?",
 					"Why do you want (2) ?",
-					"Suppose you got (2) soon ?",
+					"What would you do if you got (2) ?",
 					"What if you never got (2) ?",
 					"What would getting (2) mean to you ?",
-					"What does wanting (2) have to do with this discussion ?",
+					"What does wanting (2) have to do with what we're talking about ?",
 				},
 			},
-
+//added
+      &decomp{
+        AssemblyNext: 0,
+        Pattern:      "(.*) ?i @like ?(.*)",
+        Assemblies: []string{
+          "Why do you like (2)?",
+          "Oh really? What do you like about (2) ?",
+          "What about it do you enjoy?",
+          "Tell me more about (2) ?",
+          "What is the best part about (2) ?",
+        },
+      },
+//added
 			&decomp{
 				AssemblyNext: 0,
 				Pattern:      "(.*) ?i am (.*)@sad ?(.*)",
@@ -489,7 +575,7 @@ var keywordMap = map[string]keyword{
 				Pattern:      "(.*) ?i @belief (.*) i ?(.*)",
 				Assemblies: []string{
 					"Do you really think so ?",
-					"But you are not sure you (3).",
+					"It seems that you're not sure you (3).",
 					"Do you really doubt you (3) ?",
 				},
 			},
@@ -556,7 +642,6 @@ var keywordMap = map[string]keyword{
 				Assemblies: []string{
 					"You say (1) ?",
 					"Can you elaborate on that ?",
-					"Do you say (1) for some special reason ?",
 					"That's quite interesting.",
 				},
 			},
@@ -578,7 +663,7 @@ var keywordMap = map[string]keyword{
 				Pattern:      "(.*) ?you are ?(.*)",
 				Assemblies: []string{
 					"What makes you think I am (2) ?",
-					"Does it please you to believe I am (2) ?",
+					"Does it make you happy to believe I am (2) ?",
 					"Do you sometimes wish you were (2) ?",
 					"Perhaps you would like to be (2).",
 				},
@@ -588,11 +673,11 @@ var keywordMap = map[string]keyword{
 				Pattern:      "(.*) ?you (.*) me ?(.*)",
 				Assemblies: []string{
 					"Why do you think I (2) you ?",
-					"You like to think I (2) you -",
+					"You like to think I (2) you ...",
 					"What makes you think I (2) you ?",
 					"Really, I (2) you ?",
 					"Do you wish to believe I (2) you ?",
-					"Suppose I did (2) you -",
+					"Suppose I did (2) you ...",
 					"Does someone else believe I (2) you ?",
 				},
 			},
@@ -600,10 +685,13 @@ var keywordMap = map[string]keyword{
 				AssemblyNext: 0,
 				Pattern:      "(.*) ?you ?(.*)",
 				Assemblies: []string{
-					"We were discussing you -",
+					"I believe we were discussing you.",
 					"Oh, I (2) ?",
-					"You're not really talking about me -",
+					"You're not really talking about me, are you?",
 					"What are your feelings now ?",
+          "That seems off topic.",
+          "Do you really believe that?",
+          "What makes you say that?",
 				},
 			},
 		},
@@ -616,10 +704,11 @@ var keywordMap = map[string]keyword{
 				AssemblyNext: 0,
 				Pattern:      "(.*)",
 				Assemblies: []string{
-					"You seem to be quite positive.",
-					"You are sure.",
+					"I like that positivity.",
+					"You sound pretty certain.",
 					"I see.",
 					"I understand.",
+					"That's interesting.",
 				},
 			},
 		},
@@ -633,9 +722,9 @@ var keywordMap = map[string]keyword{
 				Pattern:      "(.*)",
 				Assemblies: []string{
 					"Are you saying no just to be negative?",
-					"You are being a bit negative.",
 					"Why not ?",
 					"Why 'no' ?",
+					"Why do you think that is ?",
 				},
 			},
 		},
@@ -710,11 +799,12 @@ var keywordMap = map[string]keyword{
 				AssemblyNext: 0,
 				Pattern:      "(.*)",
 				Assemblies: []string{
+          "What answer would please you most ?",
+
 					"Why do you ask ?",
 					"Does that question interest you ?",
 					"What is it you really wanted to know ?",
 					"Are such questions much on your mind ?",
-					"What answer would please you most ?",
 					"What do you think ?",
 					"What comes to mind when you ask that ?",
 					"Have you asked such questions before ?",
