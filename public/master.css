@@ -54,7 +54,7 @@ div.container{
   width: 100%;
   /*height: 100%;*/
   height:100vh;
-  /*position: fixed;*/
+  position: fixed;
   /*min-width: 722px;*/
 }
 
@@ -65,6 +65,7 @@ div.sidebar {
   padding: 30px;
   height: 100%;
   min-width: 200px;
+  min-height: 670px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -87,6 +88,12 @@ div.author {
 
 div.author-name{
   width: 100px;
+  font-family: 'Dosis', sans-serif;
+  color: #baf2e9;
+}
+
+div.author img {
+  cursor: pointer;
 }
 
 .logo {
@@ -201,7 +208,7 @@ div#user-item{
 }
 #user-item div{
   color: #baf2e9;
-  font-family: 'Arvo', serif;
+  font-family: 'Dosis', sans-serif;
   margin: auto;
   margin-left: 10px;
   padding: 0;
@@ -210,9 +217,9 @@ div#user-item{
 #user-item img{
   -webkit-transform: scale(0.8);
 }
-#user-item img{
+/*#user-item img{
   -webkit-transform: scale(0.5);
-}
+}*/
 
 div.nav-bar {
   height: 50px;
@@ -308,4 +315,12 @@ div.time{
   margin-left: 20px;
   font-size: 12px;
   color: #2c2d30;
+}
+
+div#bottom-sidebar{
+  margin-bottom: 50px;
+}
+
+#bottom-sidebar h3 {
+  font-size: 20px;
 }
