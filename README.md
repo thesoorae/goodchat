@@ -1,90 +1,108 @@
-Testing
+# BetterChat
 
-#GoodChat
+[Live Demo](https://betterchat.herokuapp.com/)
 
-##Background
+##Description
 
-In the ever-changing, high-speed world of tech, clients are constantly demanding faster, more lightweight apps that can handle high volumes of server requests without error. Enter GoodChat, an agile, lightning fast communication tool built using one of the most exciting programming languages currently out there, Go. Go programming language is an open-source language with small runtime, simple framework, and concurrency primitives that allow for advanced, concurrent multi-thread handling. Goodchat will support concurrent readers and writers with the use of a third-party WebSockets package developed for Go (Gorilla Toolkit), and can optimize efficiency even under high load. GoodChat will also provide a pleasant, intuitive user interface built on HTML5 and React.js. While there are several examples of Go chat applications currently out there, very few, if any, come with a browser-supported user interface. Goodchat will make it easy for users to access the power of Go, without having to load and run programs locally from their command line.
+In the ever-changing, high-speed world of tech, clients are constantly demanding faster, more lightweight apps that can handle high volumes of server requests without error. Enter BetterChat, an agile, lightning fast communication tool built using one of the most exciting programming languages currently out there, Go. Golang is an open-source language with small runtime, simple framework, and concurrency primitives that allow for advanced, concurrent multi-thread handling. Betterchat will support concurrent readers and writers with the use of a third-party WebSockets package developed for Go (Gorilla Toolkit), and can optimize efficiency even under high load. GoodChat will also provide a pleasant, intuitive user interface built entirely in JavaScript and HTML5. While there are several examples of Go chat applications currently out there, very few, if any, come with a browser-supported user interface. BetterChat will make it easy for users to access the power of Go, without having to load and run programs locally from their command line.
 
-##Functionality & MVP
+Upon entering the site, you are greeted with a welcome modal that prompts the user for a username:
 
-- [ ] Go Server Application that transfers data through WebSocket from Client to Channel
-- [ ] Each client can send and receive messages in real-time
-- [ ] Rendering of chat logs (persistence of information for each session)
-- [ ] Deployed on publicly available web server (Heroku ?)
-- [ ] Front-end rendering
-- [ ] Attractive UI
-- [ ] Production ReadMe
+![Modal Demo](docs/modaldemo.png)
 
-##Bonus
-- [ ] AI Chatbot for responding to client input
-- [ ] Can support multiple users in one chat
-- [ ] Save chat logs to PostgreSQL or other DB
-- [ ] Emojis and images
-- [ ] Scroll through chat logs without interruption
+Users can chat with friends over the internet...
 
-##Wireframe
-![Wireframe](/goodchat.png)
+![Chat Demo](docs/Chatdemo.png)
 
-##Technologies & Technical Challenges
+...or they can chat with BetterChat's customized AI bot, Eliza, who parses user's messages and chooses from over 100+ responses depending on the context:
 
-This application will be implemented using Go language, JavaScript, HTML5, and React.js elements.
+![Eliza Demo](docs/elizademo.png)
 
-The file structure will consist of the following:
 
-Scripts:
-```main.go``` the main entry point of the application
-```app.js``` holds all JS code
-```client.go``` handles client input logic
-```channel.go``` handles chat "room" logic
+##Technologies
+* Server architecture built using Go programming language
+* Data is transferred from Server to Client using Websocket connections (through third-party package gorilla/websockets)
+* Client-side is rendered using JavaScript and HTML5
+* The skeleton for Eliza was integrated from [necrophonic's own implementation](https://github.com/necrophonic/go-eliza) of the [famous Eliza bot](https://en.wikipedia.org/wiki/ELIZA), first seen in 1964
+* Avatars unique to the user's IP address were provided from [Robohash.org](https://robohash.org/)
+* Lastly, the project is deployed to Heroku for users to access easily from the internet
 
-HTML for Displaying Content:
-```style.css``` for styling
-```public/index.html``` for HTML5 rendering
+##Technical implementation
 
-The primary technical challenges will be:
-- learning Go language in a brief period of time
-- connecting application to equally fast, cloud-based web server (noticed that doesn't really exist right now so perceiving challenges in this realm)
+For handling our incoming Websocket connections we created "handleConnections()". It first upgrades our initial GET request to a full on WebSocket. If there is an error, we log it but we do not exit. This is followed by a defer statement that lets Go know to close out our WebSocket connection when the function returns. This saves us from having to write multiple "Close()" statements depending on how the function returns.
 
-##Group Members and Work Breakdown
-Our group consists of two members, Soo-Rae Hong and Boris Grogg.
+We next register our new client by adding it to the global "clients" map we created earlier.
 
-Soo-Rae's primary responsibilities will be:
-- Researching and implementing connection to cloud based platform for hosting
-- Styling of sidebar, navigation bar
-- Research and implementation of multiple users on application
-- Set up of Go application
-- AI algorithms for chatbot (bonus)
-- Storing persistent data (bonus)
+```
+func handleConnections(w http.ResponseWriter, r *http.Request){
+  ws, err := upgrader.Upgrade(w, r, nil)
+  if err != nil{
+    log.Fatal(err)
+  }
+  defer ws.Close()
+  clients[ws] = ""
 
-Boris' primary responsibilities will be
-- Research and implementation of Client and Chat inputs and outputs in Go
-- Research and implementation of Gorilla WebSockets
-- Styling of input and output components on front-end
-- Different groups and threads (bonus)
-- Emojis and other Materialize features (bonus)
+```
 
-##Implementation Timeline
+Next comes an infinite loop that continuously waits for a new message to be written to the WebSocket, unserializes it from JSON to a Message object and then throws it into the broadcast channel. Our "handleMessages()" goroutine (described below) can then take it can send it to everyone else that is connected.
 
-**Day 1 & 2:** Install, set up Go, basic concurrent reading and writing functions implemented (with TCP connection?) Gorilla WebSockets, connection between goroutines (Pair Programming)
-- Two goroutines can be connected on one channel
-- Chat function sends a greeting to each connection
-- Fully understand basic Go and Websockets functionality
+If there is some kind of error with reading from the socket, we assume the client has disconnected. We log the error and remove that client from our global "clients" map so we don't try to read from or send new messages to that client.
 
-**Day 3:** Concurrent reading and writing functions implemented (Pair Programming)
-- Chat function copies data from one connection to the other through creation of another goroutine
-- Error logging
-- Closing connection and cleanup
-- JSON files for data rendering
-- Fully understand goroutines and concurrency as executed by Go
+Another thing to note is that HTTP route handler functions are run as goroutines. This allows the HTTP server to handle multiple incoming connections without having to wait for another connection to finish. Go is awesome!
 
-**Day 4:** Front end rendering with HTML and JavaScript  
-- Completion of JS/React files to handle input and output
-- Completion of JS/React files to handle user information
-- Connect application to web host
+```
+for{
+  var msg Message
+  var elizamsg Message
 
-**Day 5:**
-- Fully styled
-- Full Documentation
-- Cleaned up source code
-- Outreach to Go open source community
+  err := ws.ReadJSON(&msg)
+  if err != nil {
+    log.Printf("error: %v", err)
+    delete(clients, ws)
+    break
+  }
+  log.Printf("The message %v", msg)
+
+  if msg.NewUser != "" || msg.UserLeft != "" {
+    if msg.NewUser != "" {
+      clients[ws]= msg.NewUser
+      if len(clients) == 4{
+        elizaOn = true
+        elizamsg.Username = "Eliza"
+        elizamsg.Message = "Three's a crowd, I'm outta here."
+      }
+    }
+  ...
+  ...
+```
+
+We use a goroutine called "handleMessages()" to send each of our messages to the client. This is a concurrent process that runs simultaneously with the rest of the application that will only take messages from the broadcast channel from before and then pass them to clients over their respective WebSocket connection.
+
+It is simply a loop that continuously reads from the "broadcast" channel and then relays the message to all of our clients. Again, if there is an error with writing to the WebSocket, we close the connection and remove it from the "clients" map.
+
+```
+func handleMessages() {
+   for {
+     msg := <-broadcast
+
+     for client := range clients {
+
+       err := client.WriteJSON(msg)
+       if err != nil {
+         log.Printf("error: %v", err)
+         client.Close()
+         delete(clients, client)
+       }
+     }
+   }
+}
+```
+
+
+##Features to be Implemented in the Future
+
+* Private Messaging
+* Emojis
+* Stored chats that persist to a database
+* Notifications when a user enters/exits
+* Multiple rooms or channels
