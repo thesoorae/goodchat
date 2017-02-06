@@ -59,12 +59,13 @@ div.container{
 }
 
 div.sidebar {
-  width: 20%;
+
   /*background-color: #1ebea5;*/
   background-color: #1ebea5;
   padding: 30px;
   height: 100%;
-  min-width: 200px;
+  width: 300px;
+  /*min-width: 200px;*/
   min-height: 600px;
   display: flex;
   flex-direction: column;
@@ -96,9 +97,15 @@ div.author img {
   cursor: pointer;
 }
 
-.logo {
+div.logo{
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  margin:  0 auto;
+}
+.logo-text {
   margin-top: 0;
-  font-size: 38px;
+  font-size: 47px;
   /*color: #57ccb9;
   -webkit-text-stroke: .1px #fff;*/
 }
@@ -205,18 +212,21 @@ div#user-item{
   display:flex;
   flex-direction: row;
   justify-content: flex-start;
+  margin: 5px;
 
 }
 #user-item div{
   color: #baf2e9;
-  font-family: 'Dosis', sans-serif;
   margin: auto;
   margin-left: 10px;
   padding: 0;
+  font-size: 20px;
+  font-family: 'Dosis', sans-serif;
 }
 
+
 #user-item img{
-  -webkit-transform: scale(0.8);
+  -webkit-transform: scale(.9);
 }
 /*#user-item img{
   -webkit-transform: scale(0.5);
@@ -246,6 +256,16 @@ div.nav-bar {
 }
 .modal-content *{
   margin: 20px;
+}
+.modal-content p{
+  font-size: 20px;
+  color: white;
+
+}
+
+.modal-content h2{
+  font-size: 25px;
+  color: white;
 
 }
 
@@ -326,7 +346,7 @@ div.time{
 img.logo-img{
   height: 50px;
   width: 100px;
-  margin-left: 50px;
+  margin: auto;
 }
 
 div#bottom-sidebar {
@@ -339,4 +359,7 @@ div#bottom-sidebar {
 
 .clickable {
   cursor: pointer;
+}
+#user-item {
+
 }
