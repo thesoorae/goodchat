@@ -4,9 +4,9 @@
 
 ##Description
 
-BetterChat is an agile, lightning fast communication tool built with Go by Soo-Rae Hong and Boris Grogg.
+BetterChat is an agile, lightning fast communication tool + AI Psychotherapy Bot built by Soo-Rae Hong and Boris Grogg.
 
-Go, or Golang, is an open-source language developed by Google with small runtime, simple framework, and concurrency primitives that allow for advanced, concurrent multi-thread handling. Betterchat supports concurrent readers and writers with the use of a third-party WebSockets package developed for Go (Gorilla Toolkit), and can optimize efficiency even under high load. Betterchat provides a pleasant, intuitive user interface built entirely in JavaScript and HTML5.
+Betterchat is built with Go. Go (or Golang) is an open-source language developed by Google with small runtime, simple framework, and concurrency primitives that allow for advanced, concurrent multi-thread handling. Betterchat supports concurrent readers and writers with the use of a third-party WebSockets package developed for Go (Gorilla Toolkit), and can optimize efficiency even under high load. Betterchat provides a pleasant, intuitive user interface built entirely in JavaScript and HTML5.
 
 And if that wasn't enough, Betterchat also has a built-in chatbot with Artificial Intelligence features based on the Eliza natural language processing program developed by Joseph Weizenbaum at MIT (more below).
 
