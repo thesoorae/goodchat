@@ -8,7 +8,7 @@ BetterChat is an agile, lightning fast communication tool + AI Psychotherapy Bot
 
 Betterchat is built with Go. Go (or Golang) is an open-source language developed by Google with small runtime, simple framework, and concurrency primitives that allow for advanced, concurrent multi-thread handling. Betterchat supports concurrent readers and writers with the use of a third-party WebSockets package developed for Go (Gorilla Toolkit), and can optimize efficiency even under high load. Betterchat provides a pleasant, intuitive user interface built entirely in JavaScript and HTML5.
 
-And if that wasn't enough, Betterchat also has a built-in chatbot with Artificial Intelligence features based on the Eliza natural language processing program developed by Joseph Weizenbaum at MIT (more below).
+Betterchat also has a built-in chatbot with Artificial Intelligence features based on the Eliza natural language processing program developed by Joseph Weizenbaum at MIT (more below).
 
 While there are several examples of Go chat applications currently out there, very few, if any, come with a browser-supported user interface, and even fewer that support both multi-user chat as well as AI. BetterChat makes it easy for users to access the power of Go, without having to load and run programs locally from their command line.
 
