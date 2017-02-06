@@ -35,7 +35,6 @@ document.addEventListener("DOMContentLoaded", function(){
 
     user = usernameInput.value;
     conn.send(JSON.stringify({newuser: user}));
-    console.log("send:" + user);
     document.getElementById('user-title').innerHTML = "@" + user;
     modal.style.display = "none";
 
@@ -43,13 +42,11 @@ document.addEventListener("DOMContentLoaded", function(){
   }
 
   document.getElementById('form').onsubmit = function () {
-    console.log("clicked");
       if (!conn) {
           return false;
       }
 
         conn.send(JSON.stringify({username: user, message: input.value}));
-        console.log("Send: " + input.value);
         input.value = "";
         input.placeholder = "";
 
@@ -118,17 +115,14 @@ document.addEventListener("DOMContentLoaded", function(){
     }
 
 
-    console.log("websocket", window["WebSocket"]);
 
 
     if (window["WebSocket"]) {
-      console.log("in websocket");
         conn = new WebSocket('ws://' + window.location.host + '/ws');
         window.conn = conn;
 
 
         conn.onclose = function (evt) {
-          console.log("in onclose");
 
             var item = document.createElement("div");
             item.innerHTML = "<b>Connection closed.</b>";
@@ -145,7 +139,6 @@ document.addEventListener("DOMContentLoaded", function(){
 
           var broadcast = JSON.parse(evt.data);
           window.broadcast = broadcast;
-          console.log("in onmessage", broadcast);
           if (broadcast.CurrentUsers) {
             userList.innerHTML = '';
             var cu = broadcast.CurrentUsers.filter(function(u){
@@ -161,7 +154,6 @@ document.addEventListener("DOMContentLoaded", function(){
                 var item = renderMsg(broadcast.username, broadcast.message)
                 appendLog(item);
           }
-          console.log("currentUsers", currentUsers);
           // if(currentUsers.length == 1 && !currentUsers.includes("Eliza")){
           //   setTimeout(elizaInitial, 3000);
           // }
