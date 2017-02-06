@@ -148,7 +148,7 @@ if elizaOn && msg.Message != "" && msg.Message != "Eliza?"{
 
       elizamsg.Message = response
     }
-    ```
+```
 
 ###Server
 The Betterchat server can be run both locally via localhost:8000, or through the public access Heroku web server by commenting out the appropriate ```import```, ```determineLIstenAddress()```, and ```main()``` functions on the ```main.go``` file.
