@@ -240,12 +240,16 @@ div.nav-bar {
     background-color: #1ebea5;
     margin: 10% auto; /* 15% from the top and centered */
     padding: 20px;
-    width: 50%; /* Could be more or less, depending on screen size */
-    min-width: 520px;
+    width: 600px; /* Could be more or less, depending on screen size */
+
 }
 .modal-content *{
-  margin: 10px;
+  margin: 20px;
 
+}
+
+#user-form {
+  margin: 50px;
 }
 #user-input {
   height: 40px;
@@ -272,6 +276,7 @@ span#user-title{
 
 .input-bar {
   margin-left: 30px;
+  margin-bottom: 25px;
 }
 
 div.message {
