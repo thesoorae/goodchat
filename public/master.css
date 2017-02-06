@@ -330,3 +330,7 @@ div#bottom-sidebar {
 #bottom-sidebar h3 {
   font-size: 20px;
 }
+
+.clickable {
+  cursor: pointer;
+}
