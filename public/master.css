@@ -305,3 +305,10 @@ div.time{
   font-size: 12px;
   color: #2c2d30;
 }
+
+img.logo-img{
+  height: 50px;
+  width: 100px;
+  margin-left: 50px;
+
+}
