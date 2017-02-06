@@ -169,7 +169,8 @@ var keywordMap = map[string]keyword{
 				AssemblyNext: 0,
 				Pattern:      "(.*)",
 				Assemblies: []string{
-					"What do you want to talk about?",
+					"Please elaborate.",
+					"I'm not sure I know what that means.",
 					"Please go on.",
 					"Tell me about yourself.",
 					"Tell me more.",

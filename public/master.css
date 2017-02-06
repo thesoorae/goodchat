@@ -187,7 +187,8 @@ div.chat-area {
 
 div#messages {
     min-height: 453px;
-    max-height: 500px;
+    /*max-height: 600px;*/
+    max-height: 60vh;
     /*height: 70vh;*/
     width: 100%;
     overflow-y: scroll;
