@@ -167,12 +167,12 @@ This is our first crack at using the Go Programming language. It was a lot of fu
 
 ##Acknowledgements
 Chat Application Inspiration
-- ![Scotch.io website on how to build a chat server](https://scotch.io/bar-talk/build-a-realtime-chat-server-with-go-and-websockets)
-- ![Andrew Gerrand's 2012 Talk on Go: Code that Grows with Grace](https://talks.golang.org/2012/chat.slide#1)
+- [Scotch.io website on how to build a chat server](https://scotch.io/bar-talk/build-a-realtime-chat-server-with-go-and-websockets)
+- [Andrew Gerrand's 2012 Talk on Go: Code that Grows with Grace](https://talks.golang.org/2012/chat.slide#1)
 
 Eliza Inspiration
-- ![Original Paper by Jospeh Weizenbaum, 1966](http://www.cse.buffalo.edu/~rapaport/572/S02/weizenbaum.eliza.1966.pdf)
-- ![Necrophonic's Implementation of Eliza]((https://github.com/necrophonic/go-eliza))
+- [Original Paper by Jospeh Weizenbaum, 1966](http://www.cse.buffalo.edu/~rapaport/572/S02/weizenbaum.eliza.1966.pdf)
+- [Necrophonic's Implementation of Eliza]((https://github.com/necrophonic/go-eliza))
 
 Avatars
 - [Robohash.org](https://robohash.org/)
