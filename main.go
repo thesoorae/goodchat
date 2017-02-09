@@ -11,6 +11,7 @@ import (
   "github.com/gorilla/websocket"
   "os"
   "time"
+  "strings"
   eliza "goodchat/eliza"
 )
 
@@ -123,7 +124,7 @@ func handleConnections(w http.ResponseWriter, r *http.Request){
       msg.CurrentUsers = usersArray
 
     }
-    if len(clients) == 2 && msg.Message == "Eliza?" {
+    if len(clients) == 2 && strings.ToLower(msg.Message) == "eliza?" {
           elizaOn = true
           elizamsg.Username = "Eliza"
           elizamsg.Message ="I'm here! What do you want to talk about?"
@@ -147,6 +148,7 @@ func handleConnections(w http.ResponseWriter, r *http.Request){
     time.AfterFunc(1 * time.Second, func(){
         broadcast <- elizamsg})}
       }
+
     }
 
 
