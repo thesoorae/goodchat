@@ -171,6 +171,7 @@ div.chat-area {
   box-shadow: 0 1px 3px #18ceb2;
   font-family: 'Dosis', sans-serif;
   cursor: pointer;
+  margin-left: 10px;
 
   /*background-color: #104da1;
   border: 1px solid #3260c7;
