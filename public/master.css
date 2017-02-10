@@ -67,6 +67,7 @@ div.sidebar {
   background-color: #1ebea5;
   padding: 30px;
   height: 100%;
+
   width: 300px;
   /*min-width: 200px;*/
   min-height: 600px;
@@ -376,7 +377,10 @@ div#bottom-sidebar {
 @media all and (device-width: 768px) and (device-height: 1024px) and (orientation:portrait){
 
   .modal, .container {
-    height: 1000px;
+    max-height: 1024px;
+  }
+  .sidebar {
+    max-height: 1024px;
   }
   div#messages{
     height: 500;
@@ -388,7 +392,11 @@ div#bottom-sidebar {
  */
 @media all and (device-width: 768px) and (device-height: 1024px) and (orientation:landscape){
   .modal, .container {
-    height: 700px;
+    max-height: 768px;
+  }
+
+  .sidebar{
+    max-height: 768px;
   }
   div#messages{
     height: 350;
