@@ -38,8 +38,8 @@ document.addEventListener("DOMContentLoaded", function(){
     document.getElementById('user-title').innerHTML = "@" + user;
     modal.style.display = "none";
 
-    return false
-  }
+    return false;
+  };
 
   document.getElementById('form').onsubmit = function () {
       if (!conn) {
