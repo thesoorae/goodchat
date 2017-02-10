@@ -148,7 +148,6 @@ func handleConnections(w http.ResponseWriter, r *http.Request){
     time.AfterFunc(1 * time.Second, func(){
         broadcast <- elizamsg})}
       }
-
     }
 
 
@@ -158,9 +157,7 @@ func handleConnections(w http.ResponseWriter, r *http.Request){
 func handleMessages() {
    for {
      msg := <-broadcast
-
      for client := range clients {
-
        err := client.WriteJSON(msg)
        if err != nil {
          log.Printf("error: %v", err)

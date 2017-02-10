@@ -61,6 +61,20 @@ type decomp struct {
 }
 
 var keywordMap = map[string]keyword{
+	"thank": keyword{
+		Weight:0,
+		Decompositions:[]*decomp{
+			&decomp{
+				AssemblyNext: 0,
+				Pattern:      "(.*)",
+				Assemblies: []string{
+					"No thanks necessary.",
+					"Of course.",
+					"You're welcome",
+				},
+			},
+		},
+	},
 
   	"eliza": keyword{
   		Weight:0,
