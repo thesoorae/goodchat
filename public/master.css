@@ -199,7 +199,6 @@ div#messages {
     min-height: 10%;
     min-height: 10vh;
     max-height: 70%;
-    height: 50%;
     height: 70vh;
     /*height: 70vh;*/
     /*max-height: 600px;*/
@@ -372,4 +371,25 @@ div#bottom-sidebar {
 }
 #user-item {
 
+}
+
+@media all and (device-width: 768px) and (device-height: 1024px) and (orientation:portrait){
+  .container {
+    height: 1024px;
+  }
+  div#messages{
+    height: 510;
+  }
+}
+
+/**
+ * iPad with landscape orientation.
+ */
+@media all and (device-width: 768px) and (device-height: 1024px) and (orientation:landscape){
+  .container {
+    height: 768px;
+  }
+  div#messages{
+    height: 350;
+  }
 }
