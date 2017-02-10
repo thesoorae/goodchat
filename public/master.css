@@ -55,10 +55,10 @@ div.container{
   /*min-width: 700px;*/
   height: 100%;
   height:100vh;
-  min-height: 700px;
+  /*min-height: 700px;*/
   position: fixed;
 
-  min-width: 722px;
+  /*min-width: 722px;*/
 }
 
 div.sidebar {
@@ -192,11 +192,13 @@ div.chat-area {
   bottom: 0px;
   width: 100%;
   margin-top: 20px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 div#messages {
+    min-height: 10%;
     min-height: 10vh;
+    max-height: 70%;
     height: 70vh;
     /*height: 70vh;*/
     /*max-height: 600px;*/

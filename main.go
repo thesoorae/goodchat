@@ -40,28 +40,28 @@ func main() {
 //// HEROKU DEPLOYMENT (ABOVE)
 
 //UNCOMMENT FOR LOCAL HOST (BELOW)
-//
-// import (
-//   "log"
-//   "net/http"
-//   "github.com/gorilla/websocket"
-//    eliza "./eliza"
-//  "strings"
-//   "time"
-//
-// )
-// func main(){
-//   //file server
-//   fs := http.FileServer(http.Dir("./public"))
-//   http.Handle("/", fs)
-//   http.HandleFunc("/ws", handleConnections)
-//   go handleMessages()
-//   log.Println("http server started on :8000")
-//   err := http.ListenAndServe(":8000", nil)
-//   if err!= nil {
-//     log.Fatal("Listen and Serve: ", err)
-//   }
-// }
+
+import (
+  "log"
+  "net/http"
+  "github.com/gorilla/websocket"
+   eliza "./eliza"
+ "strings"
+  "time"
+
+)
+func main(){
+  //file server
+  fs := http.FileServer(http.Dir("./public"))
+  http.Handle("/", fs)
+  http.HandleFunc("/ws", handleConnections)
+  go handleMessages()
+  log.Println("http server started on :8000")
+  err := http.ListenAndServe(":8000", nil)
+  if err!= nil {
+    log.Fatal("Listen and Serve: ", err)
+  }
+}
 
 ///////////LOCALHOST ABOVE
 
