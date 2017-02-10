@@ -376,10 +376,10 @@ div#bottom-sidebar {
 @media all and (device-width: 768px) and (device-height: 1024px) and (orientation:portrait){
 
   .modal, .container {
-    height: 1024px;
+    height: 1000px;
   }
   div#messages{
-    height: 510;
+    height: 500;
   }
 }
 
@@ -387,8 +387,8 @@ div#bottom-sidebar {
  * iPad with landscape orientation.
  */
 @media all and (device-width: 768px) and (device-height: 1024px) and (orientation:landscape){
-  .modal,  .container {
-    height: 768px;
+  .modal, .container {
+    height: 700px;
   }
   div#messages{
     height: 350;
