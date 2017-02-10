@@ -250,7 +250,7 @@ div.nav-bar {
     top: 0;
     width: 100%; /* Full width */
     height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
+    /*overflow: auto; /* Enable scroll if needed */*/
     background-color: rgb(0,0,0); /* Fallback color */
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 }
@@ -374,7 +374,8 @@ div#bottom-sidebar {
 }
 
 @media all and (device-width: 768px) and (device-height: 1024px) and (orientation:portrait){
-  .container {
+
+  .modal, .container {
     height: 1024px;
   }
   div#messages{
@@ -386,7 +387,7 @@ div#bottom-sidebar {
  * iPad with landscape orientation.
  */
 @media all and (device-width: 768px) and (device-height: 1024px) and (orientation:landscape){
-  .container {
+  .modal,  .container {
     height: 768px;
   }
   div#messages{
