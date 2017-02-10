@@ -184,7 +184,7 @@ div.chat-area {
   background-color: #1254af;*/
 }
 
-#form {
+div.form {
   position: absolute;
   bottom: 0px;
   width: 100%;
