@@ -697,7 +697,7 @@ var keywordMap = map[string]keyword{
 				},
 			},
 			&decomp{
-				AssemblyNext: 0,
+				AssemblyNext: 1,
 				Pattern:      "(.*) ?you ?(.*)",
 				Assemblies: []string{
 					"I believe we were discussing you.",
