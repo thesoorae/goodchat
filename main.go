@@ -28,7 +28,6 @@ func main() {
   if err != nil {
     log.Fatal(err)
   }
-  // http.HandleFunc("/", hello)
   http.HandleFunc("/ws", handleConnections)
   go handleMessages()
   log.Printf("Listening on %s...\n", addr)
@@ -130,7 +129,7 @@ func handleConnections(w http.ResponseWriter, r *http.Request){
           elizamsg.Message ="I'm here! What do you want to talk about?"
         }
 
-    if elizaOn && msg.Message != "" && msg.Message != "Eliza?"{
+    if len(clients) == 2 && msg.Message != "" && strings.ToLower(msg.Message) != "eliza?"{
           response, err := eliza.AnalyseString(msg.Message)
           if err!= nil {
             panic(err)

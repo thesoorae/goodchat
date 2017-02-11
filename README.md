@@ -1,6 +1,6 @@
 # BetterChat
 
-[Live Demo](https://betterchat.herokuapp.com/)
+[Live Demo](http://betterchat.herokuapp.com/)
 
 ##Description
 
